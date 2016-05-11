@@ -424,7 +424,7 @@ static NSTimeInterval MCTNextBackgroundFetchNever = -1;
 
     BOOL isRegistered = xmppUsername && xmppPassword;
 
-    NSString *url = [NSString stringWithFormat:@"%@%@", MCT_HTTP_BASE_URL, MCT_LOG_ERROR];
+    NSString *url = [NSString stringWithFormat:@"%@%@", MCT_HTTPS_BASE_URL, MCT_LOG_ERROR];
     MCTFormDataRequest *httpRequest = [MCTFormDataRequest requestWithURL:[NSURL URLWithString:url]];
     httpRequest.timeOutSeconds = 5;
     httpRequest.requestMethod = @"POST";
