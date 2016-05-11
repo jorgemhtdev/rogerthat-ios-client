@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>APP_EMAIL</key>
+	<string></string>
+	<key>APP_HOMESCREEN_BACKGROUND_COLOR</key>
+	<string>#ffffff</string>
+	<key>APP_HOMESCREEN_TEXT_COLOR</key>
+	<string>#ff0000</string>
+	<key>APP_TINT_COLOR</key>
+	<string></string>
+	<key>APP_TYPE</key>
+	<integer>0</integer>
+	<key>DEBUG_LOGGING</key>
+	<false/>
+	<key>FRIENDS_ENABLED</key>
+	<true/>
+	<key>HTTPS_BASE_URL</key>
+	<string>https://rogerth.at</string>
+	<key>HTTP_BASE_URL</key>
+	<string>http://rogerth.at</string>
+	<key>SHOW_FRIENDS_IN_MORE</key>
+	<false/>
+	<key>SHOW_HOMESCREEN_FOOTER</key>
+	<false/>
+	<key>SHOW_PROFILE_IN_MORE</key>
+	<true/>
+        <key>MESSAGES_SHOW_REPLY_VS_UNREAD_COUNT</key>
+        <true/>
+        <key>USE_TRUSTSTORE</key>
+	<false/>
+	<key>USE_XMPP_KICK_CHANNEL</key>
+	<false/>
+	<key>XMPP_CONNECTION_IS_SECURE</key>
+	<true/>
+	<key>XMPP_KICK_COMPONENT</key>
+	<string>kick.rogerth.at</string>
+	<key>FACEBOOK_REGISTRATION</key>
+        <true/>
+	<key>REGISTRATION_MAIN_SIGNATURE</key>
+        <string>dummy_main_signature</string>
+	<key>REGISTRATION_EMAIL_SIGNATURE</key>
+        <string>dummy_email_signature</string>
+	<key>REGISTRATION_PIN_SIGNATURE</key>
+        <string>dummy_pin_signature</string>
+	<key>EMAIL_HASH_ENCRYPTION_KEY</key>
+        <string>dummy_email_encryption_key</string>
+	<key>ABOUT_WEBSITE</key>
+        <string>www.rogerthat.net</string>
+        <key>ABOUT_WEBSITE_URL</key>
+        <string>http://www.rogerthat.net</string>
+        <key>ABOUT_EMAIL</key>
+        <string>info@mobicage.com</string>
+        <key>ABOUT_TWITTER</key>
+        <string>@rogerthat</string>
+        <key>ABOUT_TWITTER_APP_URL</key>
+        <string>twitter://user?screen_name=rogerthat</string>
+        <key>ABOUT_TWITTER_URL</key>
+        <string>https://twitter.com/rogerthat</string>
+        <key>ABOUT_FACEBOOK</key>
+        <string>/rogerthatplatform</string>
+        <key>ABOUT_FACEBOOK_URL</key>
+        <string>https://www.facebook.com/rogerthatplatform</string>
+</dict>
+</plist>

@@ -1,0 +1,5 @@
+See https://github.com/pokeb/asi-http-request/tree
+
+More Information: http://allseeing-i.com/ASIHTTPRequest/
+
+LICENSE file included in this folder.

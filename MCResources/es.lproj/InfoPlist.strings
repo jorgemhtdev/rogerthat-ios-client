@@ -1,0 +1,17 @@
+/* 
+  InfoPlist.strings
+  rogerthat
+
+  Created by Bart Pede on 03/12/14.
+
+*/
+
+"NSLocationAlwaysUsageDescription" = "
+• Compartir ubicación con tus contactos (sólo cuando permites esto).
+• Descubre automáticamente los servicios móviles.
+";
+
+"NSLocationUsageDescription" = "
+• Compartir ubicación con tus contactos (sólo cuando permites esto).
+• Descubre automáticamente los servicios móviles.
+";
