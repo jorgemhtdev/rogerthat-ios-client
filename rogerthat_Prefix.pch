@@ -1,0 +1,532 @@
+/*
+ * Copyright 2016 Mobicage NV
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @@license_version:1.1@@
+ */
+
+
+// Global flags
+
+#ifdef MCT_DEBUG
+#define MCT_SQLITE_DEBUG 1
+#else
+#define MCT_DEBUG 0
+#endif
+
+#define MCT_PREFIX_ROGERTHAT_URL @"rogerthat://"
+#define MCT_GOTO @"goto"
+
+// Standard imports
+
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#import "Three20Style.h"
+#import "TTButton.h"
+#import "UIViewAdditions.h"
+
+// Types and predefines instances
+
+typedef long long MCTlong;
+typedef float MCTFloat;
+
+extern id MCTNull;
+extern id MCTYES;
+extern id MCTNO;
+extern id MCTONE;
+extern id MCTEmptyArray;
+extern id MCTEmptyDict;
+
+extern id MCTDictClass;
+extern id MCTMutableDictClass;
+extern id MCTArrayClass;
+extern id MCTMutableArrayClass;
+extern id MCTStringClass;
+extern id MCTMutableStringClass;
+extern id MCTBooleanClass;
+extern id MCTLongClass;
+extern id MCTFloatClass;
+
+extern FILE *MCTDebugLogFile;
+extern NSObject *MCTDebugLogLock;
+
+#pragma mark -
+#pragma mark Min and max value for integer number
+// -2^53 =< N =< 2^53
+// (due to javascript representing numbers as float)
+
+#define MCT_MAX_LONG  0x0020000000000000LL
+#define MCT_MIN_LONG -0x0020000000000000LL
+
+
+#pragma mark -
+#pragma mark Useful macros to define other macros
+
+#define MCT_QUOTEME_(x) #x
+#define MCT_QUOTEME(x) MCT_QUOTEME_(x)
+
+
+#pragma mark -
+#pragma mark Useful macros
+
+#define BOOLSTR(b) ((b) ? @"YES" : @"NO")
+#define IS_FLAG_SET(value, flag) (((value) & (flag)) == (flag))
+#define OR(a, b) ((a) ? (a) : (b))
+#define MCT_RELEASE(obj) \
+{ \
+    if ([obj respondsToSelector:@selector(delegate)]) { \
+        LOG(@"dealloc: [%@ setDelegate:nil]", NSStringFromClass([obj class])); \
+        [obj performSelector:@selector(setDelegate:) withObject:nil]; \
+    } \
+    if ([obj respondsToSelector:@selector(dataSource)]) { \
+        LOG(@"dealloc: [%@ setDataSource:nil]", NSStringFromClass([obj class])); \
+        [obj performSelector:@selector(setDataSource:) withObject:nil]; \
+    } \
+    obj = nil; \
+}
+
+
+#pragma mark -
+#pragma mark Logging
+
+#define MC_LOG_USING_PRINTF
+
+#define LOGLEVEL_TRACE   "TRACE"
+#define LOGLEVEL_DEBUG   "DEBUG"
+#define LOGLEVEL_INFO    "INFO "
+#define LOGLEVEL_WARNING "WARN "
+#define LOGLEVEL_ERROR   "ERROR"
+#define LOGLEVEL_BUG     "BUG! "
+
+#define __ASSERT_MCT_QUEUE(s) MCTAssertQueue(s, __FILE__, __LINE__, __FUNCTION__)
+
+#define __LOG(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_INFO, "", (s), ##__VA_ARGS__)
+#define __BUG(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_BUG, "", (s), ##__VA_ARGS__)
+#define __ERROR(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_ERROR, "", (s), ##__VA_ARGS__)
+#define __HERE(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_TRACE, "", @"")
+
+#define __XMPPLOG(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_INFO, "[XMPPLOG] ", (s), ##__VA_ARGS__)
+#define __XMPPBUG(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_BUG, "[XMPPLOG] ", (s), ##__VA_ARGS__)
+#define __XMPPERROR(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_ERROR, "[XMPPLOG] ", (s), ##__VA_ARGS__)
+#define __XMPPHERE(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_TRACE, "[XMPPLOG] ", @"")
+
+#define __HTTPLOG(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_INFO, "[HTTPLOG] ", (s), ##__VA_ARGS__)
+#define __HTTPBUG(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_BUG, "[HTTPLOG] ", (s), ##__VA_ARGS__)
+#define __HTTPERROR(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_ERROR, "[HTTPLOG] ", (s), ##__VA_ARGS__)
+#define __HTTPHERE(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_TRACE, "[HTTPLOG] ", @"")
+
+#define __BEACON_LOG(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_INFO, "[BEACON_LOG] ", (s), ##__VA_ARGS__)
+#define __BEACON_BUG(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_BUG, "[BEACON_LOG] ", (s), ##__VA_ARGS__)
+#define __BEACON_ERROR(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_ERROR, "[BEACON_LOG] ", (s), ##__VA_ARGS__)
+#define __BEACON_HERE(s,...) MCTLog(__FILE__, __LINE__, __FUNCTION__, LOGLEVEL_TRACE, "[BEACON_LOG] ", @"")
+
+#define __T_UI(s) __ASSERT_MCT_QUEUE(@"UI")
+#define __T_BACKLOG(s) __ASSERT_MCT_QUEUE(@"BACKLOG")
+#define __T_BIZZ(s) __ASSERT_MCT_QUEUE(@"BIZZ")
+#define __T_DWNL(s) __ASSERT_MCT_QUEUE(@"DOWNLOAD")
+#define __T_DONTCARE(s)
+#define __T_TODO(s) LOG(@"Threading/Queue TODO");
+
+
+
+#ifdef MCT_DEBUG
+
+#define LOG(s,...) __LOG((s), ##__VA_ARGS__)
+#define BUG(s,...) __BUG((s), ##__VA_ARGS__)
+#define ERROR(s,...) __ERROR((s), ##__VA_ARGS__)
+#define HERE(s,...) __HERE((s), ##__VA_ARGS__)
+
+#define XMPPLOG(s,...) __XMPPLOG((s), ##__VA_ARGS__)
+#define XMPPBUG(s,...) __XMPPBUG((s), ##__VA_ARGS__)
+#define XMPPERROR(s,...) __XMPPERROR((s), ##__VA_ARGS__)
+#define XMPPHERE(s,...) __XMPPHERE((s), ##__VA_ARGS__)
+
+#define HTTPLOG(s,...) __HTTPLOG((s), ##__VA_ARGS__)
+#define HTTPBUG(s,...) __HTTPBUG((s), ##__VA_ARGS__)
+#define HTTPERROR(s,...) __HTTPERROR((s), ##__VA_ARGS__)
+#define HTTPHERE(s,...) __HTTPHERE((s), ##__VA_ARGS__)
+
+#define BEACON_LOG(s,...) __BEACON_LOG((s), ##__VA_ARGS__)
+#define BEACON_BUG(s,...) __BEACON_BUG((s), ##__VA_ARGS__)
+#define BEACON_ERROR(s,...) __BEACON_ERROR((s), ##__VA_ARGS__)
+#define BEACON_HERE(s,...) __BEACON_HERE((s), ##__VA_ARGS__)
+
+#define T_UI(s) __T_UI(s)
+#define T_BACKLOG(s) __T_BACKLOG(s)
+#define T_BIZZ(s) __T_BIZZ(s)
+#define T_DWNL(s) __T_DWNL(s)
+#define T_DONTCARE(s)
+#define T_TODO(s) __T_TODO(s)
+
+
+#else
+
+#define LOG(s,...) if ([MCTUtils forwardingLogs]) { __LOG((s), ##__VA_ARGS__); }
+#define BUG(s,...) if ([MCTUtils forwardingLogs]) { __BUG((s), ##__VA_ARGS__); }
+#define ERROR(s,...) if ([MCTUtils forwardingLogs]) { __ERROR((s), ##__VA_ARGS__); }
+#define HERE(s,...) if ([MCTUtils forwardingLogs]) { __HERE((s), ##__VA_ARGS__); }
+
+#define XMPPLOG(s,...) if ([MCTUtils forwardingLogs]) { __XMPPLOG((s), ##__VA_ARGS__); }
+#define XMPPBUG(s,...) if ([MCTUtils forwardingLogs]) { __XMPPBUG((s), ##__VA_ARGS__); }
+#define XMPPERROR(s,...) if ([MCTUtils forwardingLogs]) { __XMPPERROR((s), ##__VA_ARGS__); }
+#define XMPPHERE(s,...) if ([MCTUtils forwardingLogs]) { __XMPPHERE((s), ##__VA_ARGS__); }
+
+#define HTTPLOG(s,...) if ([MCTUtils forwardingLogs]) { __HTTPLOG((s), ##__VA_ARGS__); }
+#define HTTPBUG(s,...) if ([MCTUtils forwardingLogs]) { __HTTPBUG((s), ##__VA_ARGS__); }
+#define HTTPERROR(s,...) if ([MCTUtils forwardingLogs]) { __HTTPERROR((s), ##__VA_ARGS__); }
+#define HTTPHERE(s,...) if ([MCTUtils forwardingLogs]) { __HTTPHERE((s), ##__VA_ARGS__); }
+
+#define BEACON_LOG(s,...) if ([MCTUtils forwardingLogs]) { __BEACON_LOG((s), ##__VA_ARGS__); }
+#define BEACON_BUG(s,...) if ([MCTUtils forwardingLogs]) { __BEACON_BUG((s), ##__VA_ARGS__); }
+#define BEACON_ERROR(s,...) if ([MCTUtils forwardingLogs]) { __BEACON_ERROR((s), ##__VA_ARGS__); }
+#define BEACON_HERE(s,...) if ([MCTUtils forwardingLogs]) { __BEACON_HERE((s), ##__VA_ARGS__); }
+
+#define T_UI(s) if ([MCTUtils forwardingLogs]) { __T_UI(s); }
+#define T_BACKLOG(s) if ([MCTUtils forwardingLogs]) { __T_BACKLOG(s); }
+#define T_BIZZ(s) if ([MCTUtils forwardingLogs]) { __T_BIZZ(s); }
+#define T_DWNL(s) if ([MCTUtils forwardingLogs]) { __T_DWNL(s); }
+#define T_DONTCARE(s)
+#define T_TODO(s) if ([MCTUtils forwardingLogs]) { __T_TODO(s); }
+
+#endif
+
+#define T_ON_UI_THREAD(s) MCTCheckQueue(@"UI")
+#define T_ON_COMM_QUEUE(s) MCTCheckQueue(@"COMM")
+#define T_ON_XMPP_QUEUE(s) MCTCheckQueue(@"XMPP")
+#define T_ON_HTTP_QUEUE(s) MCTCheckQueue(@"HTTP")
+
+void MCTLog(const char * const sourceFile, const int lineNumber, const char * const theFunction, const char * const logLevel, const char * const prefix, void *format, ...);
+
+void MCTAssertQueue(NSString *queueName, const char * const sourceFile, const int lineNumber, const char * const theFunction);
+
+BOOL MCTCheckQueue(NSString *queueName);
+
+
+#pragma mark -
+#pragma mark Exceptions
+
+@interface JsonException : NSException
+@end
+
+@interface SqlException : NSException
+@end
+
+@interface SqlConstraintException : SqlException
+@end
+
+@interface MCTBizzException: NSException
+@end
+
+extern JsonException *JSON_EXCEPTION;
+
+extern SqlException *SQL_EXCEPTION;
+
+extern SqlConstraintException *SQL_CONSTRAINT_EXCEPTION;
+
+// Throw an SqlException by a given error code
+#define MCT_THROW_SQL_EXCEPTION(__e) \
+{ \
+    HERE(); \
+    NSString *reason = nil; \
+    const char *err = sqlite3_errmsg([MCTComponentFramework backlogDB]); \
+    if (err == NULL) \
+        err = sqlite3_errmsg([MCTComponentFramework writeableDB]); \
+    if (err != NULL) { \
+        reason = [NSString stringWithUTF8String:err]; \
+    } \
+    if ((__e) == SQLITE_CONSTRAINT) { \
+        LOG(@"sql constraint exception"); \
+        @throw([SqlConstraintException exceptionWithName:@"" reason:reason userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:(__e)] forKey:@"SQLITE_ERROR_CODE"]]); \
+    } else { \
+        ERROR(@"SQL error %d", (__e)); \
+        @throw([SqlException exceptionWithName:@"" reason:reason userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:(__e)] forKey:@"SQLITE_ERROR_CODE"]]); \
+    } \
+}
+
+#define DB_LOCKED_TRANSACTION(__blockop) \
+{ \
+    LOG(@"DB LOCKED TXN START"); \
+    HERE(); \
+    @try { \
+        @synchronized([[MCTComponentFramework dbManager] lock]) { \
+            int __e; \
+            if ((__e = sqlite3_exec([MCTComponentFramework writeableDB], "BEGIN EXCLUSIVE;", 0, 0, 0)) != SQLITE_OK) { \
+                LOG(@"Cannot begin transaction"); \
+                MCT_THROW_SQL_EXCEPTION(__e); \
+            } \
+            BOOL __committed = NO; \
+            @try { \
+                __blockop ;\
+                if ((__e = sqlite3_exec([MCTComponentFramework writeableDB], "COMMIT;", 0, 0, 0)) != SQLITE_OK) { \
+                    LOG(@"Cannot commit transaction"); \
+                    MCT_THROW_SQL_EXCEPTION(__e); \
+                } \
+                __committed = YES; \
+            } @finally { \
+                if (!__committed) { \
+                    if ((__e = sqlite3_exec([MCTComponentFramework writeableDB], "ROLLBACK;", 0, 0, 0)) != SQLITE_OK) { \
+                        LOG(@"Cannot rollback transaction"); \
+                        MCT_THROW_SQL_EXCEPTION(__e); \
+                    } \
+                    LOG(@"Rollback successful!"); \
+                } \
+            } \
+        } \
+    } @finally { \
+        LOG(@"DB LOCKED TXN STOP"); \
+    } \
+}
+
+#define DB_LOCKED_OPERATION(__blockop) \
+{ \
+    @synchronized([[MCTComponentFramework dbManager] lock]) { \
+        __blockop ;\
+    } \
+}
+
+#pragma mark -
+#pragma mark Availability stuff
+
+#ifndef __IPHONE_5_0
+#define __IPHONE_5_0 50000
+#endif
+
+#ifndef __IPHONE_6_0
+#define __IPHONE_6_0 60000
+#endif
+
+#ifndef __IPHONE_7_0
+#define __IPHONE_7_0 70000
+#endif
+
+#ifndef __IPHONE_8_0
+#define __IPHONE_8_0 80000
+#endif
+
+
+#ifndef NSFoundationVersionNumber_iOS_5_0
+#define NSFoundationVersionNumber_iOS_5_0  881.00
+#endif
+
+#ifndef NSFoundationVersionNumber_iOS_6_0
+#define NSFoundationVersionNumber_iOS_6_0  992.00
+#endif
+
+#ifndef NSFoundationVersionNumber_iOS_6_1
+#define NSFoundationVersionNumber_iOS_6_1  993.00
+#endif
+
+#ifndef NSFoundationVersionNumber_iOS_7_0
+#define NSFoundationVersionNumber_iOS_7_0 1047.20
+#endif
+
+#ifndef NSFoundationVersionNumber_iOS_7_1
+#define NSFoundationVersionNumber_iOS_7_1 1047.25
+#endif
+
+// iOS 5.0
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_5_0
+#define IF_IOS5_OR_GREATER(...) \
+if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_5_0) \
+{ \
+__VA_ARGS__ \
+}
+#else
+#define IF_IOS5_OR_GREATER(...)
+#endif
+
+#define IF_PRE_IOS5(...) \
+if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_5_0) \
+{ \
+__VA_ARGS__ \
+}
+
+// iOS 6.0
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_6_0
+#define IF_IOS6_OR_GREATER(...) \
+if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_6_0) \
+{ \
+__VA_ARGS__ \
+}
+#else
+#define IF_IOS6_OR_GREATER(...)
+#endif
+
+#define IF_PRE_IOS6(...) \
+if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_6_0) \
+{ \
+__VA_ARGS__ \
+}
+
+// iOS 7.0
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_0
+#define IF_IOS7_OR_GREATER(...) \
+if (NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_7_0) \
+{ \
+__VA_ARGS__ \
+}
+#else
+#define IF_IOS7_OR_GREATER(...)
+#endif
+
+#define IF_PRE_IOS7(...) \
+if (NSFoundationVersionNumber < NSFoundationVersionNumber_iOS_7_0) \
+{ \
+__VA_ARGS__ \
+}
+
+// iOS 8.0
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+#define IF_IOS8_OR_GREATER(...) \
+if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_7_1) \
+{ \
+__VA_ARGS__ \
+}
+#else
+#define IF_IOS8_OR_GREATER(...)
+#endif
+
+#define IF_PRE_IOS8(...) \
+if (NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) \
+{ \
+__VA_ARGS__ \
+}
+
+#pragma mark -
+#pragma mark Constants
+
+// got the expression from http://www.regular-expressions.info/email.html
+#define MCT_REGEX_EMAIL (@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9]" \
+@"(?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+
+#define MCT_REGEX_DASHBOARD @"^dashboard.*@rogerth\\.at$"
+
+#define MCT_SYSTEM_FRIEND_EMAIL @"dashboard@rogerth.at"
+#define MCT_SYSTEM_FRIEND_ICON @"Icon-50.png"
+#define MCT_UNKNOWN_AVATAR @"unknown_avatar.png"
+#define MCT_UNKNOWN_AVATAR_NON_FRIEND @"unknown_avatar_non_friend.png"
+
+#define MCT_SETTINGS_INVISIBLE          @"invisible_mode"
+#define MCT_SETTINGS_CUSTOM_ALARM       @"custom_alarm"
+#define MCT_SETTINGS_TRANSFER_WIFI_ONLY @"transfer_wifi_only"
+
+#define MCT_NOTIFICATION_BACKGROUND @"MCT_NOTIFICATION_BACKGROUND"
+
+// Config constants
+
+typedef enum {
+    MCTFriendsCaptionFriends = 0,
+    MCTFriendsCaptionColleagues = 1,
+    MCTFriendsCaptionContacts = 2
+} MCTFriendsCaption;
+
+extern NSString *MCT_HTTP_BASE_URL;
+extern NSString *MCT_HTTPS_BASE_URL;
+extern NSString *MCT_HTTPS_BASE_URL_HOST;
+extern NSURL *MCT_LOG_FORWARDING_URL;
+extern BOOL MCT_USE_XMPP_KICK_CHANNEL;
+extern NSString *MCT_XMPP_KICK_COMPONENT;
+extern BOOL MCT_DEBUG_LOGGING;
+extern BOOL MCT_USE_SECURE_XMPP_CONNECTION;
+extern BOOL MCT_USE_TRUSTSTORE;
+extern BOOL MCT_FRIENDS_ENABLED;
+extern MCTFriendsCaption MCT_FRIENDS_CAPTION;
+extern BOOL MCT_SHOW_FRIENDS_IN_MORE;
+extern BOOL MCT_SHOW_PROFILE_IN_MORE;
+extern BOOL MCT_SHOW_HOMESCREEN_FOOTER;
+extern NSString *MCT_SCAN_URL_PREFIX;
+extern BOOL MCT_FACEBOOK_REGISTRATION;
+extern NSString *MCT_REGISTRATION_MAIN_SIGNATURE;
+extern NSString *MCT_REGISTRATION_EMAIL_SIGNATURE;
+extern NSString *MCT_REGISTRATION_PIN_SIGNATURE;
+extern NSString *MCT_EMAIL_HASH_ENCRYPTION_KEY;
+extern BOOL MCT_MESSAGES_SHOW_REPLY_VS_UNREAD_COUNT;
+extern NSString *MCT_ABOUT_WEBSITE;
+extern NSString *MCT_ABOUT_WEBSITE_URL;
+extern NSString *MCT_ABOUT_EMAIL;
+extern NSString *MCT_ABOUT_TWITTER;
+extern NSString *MCT_ABOUT_TWITTER_APP_URL;
+extern NSString *MCT_ABOUT_TWITTER_URL;
+extern NSString *MCT_ABOUT_FACEBOOK;
+extern NSString *MCT_ABOUT_FACEBOOK_URL;
+
+#define MCT_NETWORKTEST_URL             @"/"
+#define MCT_RPC_URL                     @"/json-rpc"
+#define MCT_REGISTRATION_URL_INSTALL    @"/unauthenticated/mobi/registration/register_install"
+#define MCT_REGISTRATION_URL_INIT       @"/unauthenticated/mobi/registration/init_via_email"
+#define MCT_REGISTRATION_URL_VERIFY     @"/unauthenticated/mobi/registration/verify_email"
+#define MCT_REGISTRATION_URL_FACEBOOK   @"/unauthenticated/mobi/registration/register_facebook"
+#define MCT_REGISTRATION_URL_QR_URL     @"/unauthenticated/mobi/registration/register_qr"
+#define MCT_REGISTRATION_URL_FINISH     @"/unauthenticated/mobi/registration/finish"
+#define MCT_REGISTRATION_URL_LOG_STEP   @"/unauthenticated/mobi/registration/log_registration_step"
+#define MCT_AVATAR_URL_PREFIX           @"/unauthenticated/mobi/avatar/"
+#define MCT_LOG_ERROR                   @"/unauthenticated/mobi/logging/exception"
+#define MCT_INSTALLATION_URL            @"/install"
+#define MCT_TERMS_OF_SERVICE_URL        @"/static/terms_and_conditions.html"
+#define MCT_LOAD_SRV_RECORDS            @"/mobi/rest/srv/load?email="
+#define MCT_MDP_SESSION_INIT            @"/mobi/rest/mdp/session/init"
+#define MCT_MDP_SESSION_AUTHORIZED      @"/mobi/rest/mdp/session/authorized"
+
+#define HTTP_MOVED_PERMANENTLY 301
+#define HTTP_MOVED_TEMPORARILY 302
+
+extern NSString *MCT_PRODUCT_VERSION;
+extern NSString *MCT_PRODUCT_NAME;
+extern NSString *MCT_PRODUCT_ID;
+
+extern NSString *MCT_APP_EMAIL;
+extern NSString *MCT_APP_HOMESCREEN_BACKGROUND_COLOR;
+extern NSString *MCT_APP_HOMESCREEN_TEXT_COLOR;
+extern NSString *MCT_APP_HOMESCREEN_COLOR_SCHEME;
+extern BOOL MCT_FULL_WIDTH_HEADERS;
+extern UIColor *MCT_APP_TINT_COLOR;
+extern NSString *MCT_FACEBOOK_APP_ID;
+
+typedef enum {
+    MCTAppTypeRogerthat = 0,
+    MCTAppTypeCityApp = 1,
+    MCTAppTypeEnterprise = 2,
+    MCTAppTypeContentBranding = 3,
+    MCTAppTypeYSAAA = 4, // not yet implemented
+} MCTAppType;
+
+typedef enum {
+    MCTRegistrationTypeNormal = 0,
+    MCTRegistrationTypeOauth = 1,
+} MCTRegistrationType;
+
+extern int MCT_APP_TYPE;
+extern int MCT_REGISTRATION_TYPE;
+
+#define IS_ROGERTHAT_APP        (MCT_APP_TYPE == MCTAppTypeRogerthat)
+#define IS_CITY_APP             (MCT_APP_TYPE == MCTAppTypeCityApp)
+#define IS_ENTERPRISE_APP       (MCT_APP_TYPE == MCTAppTypeEnterprise)
+#define IS_CONTENT_BRANDING_APP (MCT_APP_TYPE == MCTAppTypeContentBranding)
+#define IS_YSAAA                (MCT_APP_TYPE == MCTAppTypeYSAAA)
+
+extern NSString *MCT_HOME_SCREEN_STYLE_TABS;
+extern NSString *MCT_HOME_SCREEN_STYLE_2X3;
+extern NSString *MCT_HOME_SCREEN_STYLE_3X3;
+extern NSString *MCT_HOME_SCREEN_STYLE;
+
+// contains the MCTServiceOrganizationType for which the app should help the user finding services
+extern NSArray *MCT_SEARCH_SERVICES_IF_NONE_CONNECTED;
+// contains the keys for extending the profile
+extern NSArray *MCT_PROFILE_DATA_FIELDS;
+extern BOOL MCT_PROFILE_SHOW_GENDER_AND_BIRTHDATE;

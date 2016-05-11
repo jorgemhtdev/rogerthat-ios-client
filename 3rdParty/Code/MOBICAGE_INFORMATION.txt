@@ -1,0 +1,5 @@
+See https://github.com/steipete/PSPDFTextView
+
+More Information: http://petersteinberger.com/blog/2014/fixing-uitextview-on-ios-7/
+
+LICENSE file included in this folder.
