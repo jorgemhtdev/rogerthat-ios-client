@@ -1,0 +1,53 @@
+
+Steps to publish in Apple AppStore
+----------------------------------
+
+1. Commit all code. Run mobicage license tool.
+   git pull ; git push
+
+   Check for i18n problems
+    1. cd MCResources/UI
+    2. ./__checkStrings.sh
+    3. Check content of __checkStringResult.txt
+    4. grep -rn XXX MCResources/*.lproj
+    5. Run the location tool and check that no new strings appear in the en.lproj, nl.lproj, ... files
+    6. Do job for partial localizations e.g. Hebrew
+
+2. Review & commit your changes and push.
+
+3. Go to http://jenkins.mobicage.com/
+   log in
+   select iOS-Release
+   press Build Now
+
+4. Go to build artifacts when build is finished
+      Save build/Release-iphoneos/rogerthat.1.0.44.I.ipa to your desktop
+      CHECK that ipa is about 3.7 MB in size
+
+5. Import in itunes, test on physical phone on ios 4 and 5
+
+6. browse to developer.apple.com - ios dev center
+   log in
+   on the right top, select 'iTunes Connect'
+     Manage your Applications
+     Click on Rogerth.at Messenger
+     Add Version
+       Enter version number - enter the correct number e.g. '1.0.44'
+       Add what's new information
+     Click 'Ready to upload binary' (right top)
+
+7. Go back to jenkins
+   In the build artifacts go to build/Release-iphoneos/rogerthat.app/
+   Download as a zip (rm ~/Downloads/rogerthat.app.zip first)
+
+8. Open Application Launcher (in terminal: open "/Applications/Xcode.app/Contents/Applications/Application Loader.app/")
+   Log in
+   Click Deliver Your App
+   Select Rogerthat
+   Verify the Application Information and click [Choosee…]
+   Select the downloaded rogerthat.app.zip from the step above (Some say you can select the corresponding .ipa instead of the .app.zip, but I used the .app.zip)
+   Click the [Send] button
+   Wait a few minutes
+       
+9. wait 5 working days...
+

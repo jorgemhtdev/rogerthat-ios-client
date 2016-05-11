@@ -1,0 +1,2 @@
+msg-received.wav is SweetAlertSound3.wav, downloaded from http://www.freesound.org/samplesViewSingle.php?id=72127
+alarm_ring.wav is cellfone_ring.wav, downloaded from http://www.freesound.org/samplesViewSingle.php?id=30054
