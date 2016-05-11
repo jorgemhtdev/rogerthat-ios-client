@@ -1,0 +1,169 @@
+/*
+ * Copyright 2016 Mobicage NV
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @@license_version:1.1@@
+ */
+
+#import "MCTTransferObjects.h"
+#import "MCTRPCCall.h"
+
+
+@protocol MCT_com_mobicage_capi_friends_IClientRPC
+
+- (MCT_com_mobicage_to_friends_BecameFriendsResponseTO *)SC_API_becameFriendsWithRequest:(MCT_com_mobicage_to_friends_BecameFriendsRequestTO *)request;
+
+- (MCT_com_mobicage_to_friends_UpdateFriendResponseTO *)SC_API_updateFriendWithRequest:(MCT_com_mobicage_to_friends_UpdateFriendRequestTO *)request;
+
+- (MCT_com_mobicage_to_friends_UpdateFriendSetResponseTO *)SC_API_updateFriendSetWithRequest:(MCT_com_mobicage_to_friends_UpdateFriendSetRequestTO *)request;
+
+- (MCT_com_mobicage_to_friends_UpdateGroupsResponseTO *)SC_API_updateGroupsWithRequest:(MCT_com_mobicage_to_friends_UpdateGroupsRequestTO *)request;
+
+@end
+
+
+
+@protocol MCT_com_mobicage_capi_location_IClientRPC
+
+- (MCT_com_mobicage_to_location_DeleteBeaconDiscoveryResponseTO *)SC_API_deleteBeaconDiscoveryWithRequest:(MCT_com_mobicage_to_location_DeleteBeaconDiscoveryRequestTO *)request;
+
+- (MCT_com_mobicage_to_location_GetLocationResponseTO *)SC_API_getLocationWithRequest:(MCT_com_mobicage_to_location_GetLocationRequestTO *)request;
+
+- (MCT_com_mobicage_to_location_LocationResultResponseTO *)SC_API_locationResultWithRequest:(MCT_com_mobicage_to_location_LocationResultRequestTO *)request;
+
+- (MCT_com_mobicage_to_location_TrackLocationResponseTO *)SC_API_trackLocationWithRequest:(MCT_com_mobicage_to_location_TrackLocationRequestTO *)request;
+
+- (MCT_com_mobicage_to_beacon_UpdateBeaconRegionsResponseTO *)SC_API_updateBeaconRegionsWithRequest:(MCT_com_mobicage_to_beacon_UpdateBeaconRegionsRequestTO *)request;
+
+@end
+
+
+
+@protocol MCT_com_mobicage_capi_messaging_IClientRPC
+
+- (MCT_com_mobicage_to_messaging_ConversationDeletedResponseTO *)SC_API_conversationDeletedWithRequest:(MCT_com_mobicage_to_messaging_ConversationDeletedRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_EndMessageFlowResponseTO *)SC_API_endMessageFlowWithRequest:(MCT_com_mobicage_to_messaging_EndMessageFlowRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_MessageLockedResponseTO *)SC_API_messageLockedWithRequest:(MCT_com_mobicage_to_messaging_MessageLockedRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewAdvancedOrderFormResponseTO *)SC_API_newAdvancedOrderFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewAdvancedOrderFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewAutoCompleteFormResponseTO *)SC_API_newAutoCompleteFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewAutoCompleteFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewDateSelectFormResponseTO *)SC_API_newDateSelectFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewDateSelectFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewGPSLocationFormResponseTO *)SC_API_newGPSLocationFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewGPSLocationFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_NewMessageResponseTO *)SC_API_newMessageWithRequest:(MCT_com_mobicage_to_messaging_NewMessageRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewMultiSelectFormResponseTO *)SC_API_newMultiSelectFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewMultiSelectFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewMyDigiPassFormResponseTO *)SC_API_newMyDigiPassFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewMyDigiPassFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewPhotoUploadFormResponseTO *)SC_API_newPhotoUploadFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewPhotoUploadFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewRangeSliderFormResponseTO *)SC_API_newRangeSliderFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewRangeSliderFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewSingleSelectFormResponseTO *)SC_API_newSingleSelectFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewSingleSelectFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewSingleSliderFormResponseTO *)SC_API_newSingleSliderFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewSingleSliderFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewTextBlockFormResponseTO *)SC_API_newTextBlockFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewTextBlockFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_NewTextLineFormResponseTO *)SC_API_newTextLineFormWithRequest:(MCT_com_mobicage_to_messaging_forms_NewTextLineFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_StartFlowResponseTO *)SC_API_startFlowWithRequest:(MCT_com_mobicage_to_messaging_StartFlowRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_TransferCompletedResponseTO *)SC_API_transferCompletedWithRequest:(MCT_com_mobicage_to_messaging_TransferCompletedRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateAdvancedOrderFormResponseTO *)SC_API_updateAdvancedOrderFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateAdvancedOrderFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateAutoCompleteFormResponseTO *)SC_API_updateAutoCompleteFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateAutoCompleteFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateDateSelectFormResponseTO *)SC_API_updateDateSelectFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateDateSelectFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateGPSLocationFormResponseTO *)SC_API_updateGPSLocationFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateGPSLocationFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_UpdateMessageResponseTO *)SC_API_updateMessageWithRequest:(MCT_com_mobicage_to_messaging_UpdateMessageRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_MemberStatusUpdateResponseTO *)SC_API_updateMessageMemberStatusWithRequest:(MCT_com_mobicage_to_messaging_MemberStatusUpdateRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateMultiSelectFormResponseTO *)SC_API_updateMultiSelectFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateMultiSelectFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateMyDigiPassFormResponseTO *)SC_API_updateMyDigiPassFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateMyDigiPassFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdatePhotoUploadFormResponseTO *)SC_API_updatePhotoUploadFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdatePhotoUploadFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateRangeSliderFormResponseTO *)SC_API_updateRangeSliderFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateRangeSliderFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateSingleSelectFormResponseTO *)SC_API_updateSingleSelectFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateSingleSelectFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateSingleSliderFormResponseTO *)SC_API_updateSingleSliderFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateSingleSliderFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateTextBlockFormResponseTO *)SC_API_updateTextBlockFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateTextBlockFormRequestTO *)request;
+
+- (MCT_com_mobicage_to_messaging_forms_UpdateTextLineFormResponseTO *)SC_API_updateTextLineFormWithRequest:(MCT_com_mobicage_to_messaging_forms_UpdateTextLineFormRequestTO *)request;
+
+@end
+
+
+
+@protocol MCT_com_mobicage_capi_services_IClientRPC
+
+- (MCT_com_mobicage_to_service_ReceiveApiCallResultResponseTO *)SC_API_receiveApiCallResultWithRequest:(MCT_com_mobicage_to_service_ReceiveApiCallResultRequestTO *)request;
+
+- (MCT_com_mobicage_to_service_UpdateUserDataResponseTO *)SC_API_updateUserDataWithRequest:(MCT_com_mobicage_to_service_UpdateUserDataRequestTO *)request;
+
+@end
+
+
+
+@protocol MCT_com_mobicage_capi_system_IClientRPC
+
+- (MCT_com_mobicage_to_system_ForwardLogsResponseTO *)SC_API_forwardLogsWithRequest:(MCT_com_mobicage_to_system_ForwardLogsRequestTO *)request;
+
+- (MCT_com_mobicage_to_system_IdentityUpdateResponseTO *)SC_API_identityUpdateWithRequest:(MCT_com_mobicage_to_system_IdentityUpdateRequestTO *)request;
+
+- (MCT_com_mobicage_to_system_UnregisterMobileResponseTO *)SC_API_unregisterMobileWithRequest:(MCT_com_mobicage_to_system_UnregisterMobileRequestTO *)request;
+
+- (MCT_com_mobicage_to_system_UpdateAvailableResponseTO *)SC_API_updateAvailableWithRequest:(MCT_com_mobicage_to_system_UpdateAvailableRequestTO *)request;
+
+- (MCT_com_mobicage_to_js_embedding_UpdateJSEmbeddingResponseTO *)SC_API_updateJsEmbeddingWithRequest:(MCT_com_mobicage_to_js_embedding_UpdateJSEmbeddingRequestTO *)request;
+
+- (MCT_com_mobicage_to_system_UpdateSettingsResponseTO *)SC_API_updateSettingsWithRequest:(MCT_com_mobicage_to_system_UpdateSettingsRequestTO *)request;
+
+@end
+
+
+
+@interface MCTCallReceiver : NSObject
+{
+    id<MCT_com_mobicage_capi_friends_IClientRPC> __weak com_mobicage_capi_friends_IClientRPC_instance_;
+    id<MCT_com_mobicage_capi_location_IClientRPC> __weak com_mobicage_capi_location_IClientRPC_instance_;
+    id<MCT_com_mobicage_capi_messaging_IClientRPC> __weak com_mobicage_capi_messaging_IClientRPC_instance_;
+    id<MCT_com_mobicage_capi_services_IClientRPC> __weak com_mobicage_capi_services_IClientRPC_instance_;
+    id<MCT_com_mobicage_capi_system_IClientRPC> __weak com_mobicage_capi_system_IClientRPC_instance_;
+}
+
+@property(nonatomic, weak) id<MCT_com_mobicage_capi_friends_IClientRPC> com_mobicage_capi_friends_IClientRPC_instance;
+@property(nonatomic, weak) id<MCT_com_mobicage_capi_location_IClientRPC> com_mobicage_capi_location_IClientRPC_instance;
+@property(nonatomic, weak) id<MCT_com_mobicage_capi_messaging_IClientRPC> com_mobicage_capi_messaging_IClientRPC_instance;
+@property(nonatomic, weak) id<MCT_com_mobicage_capi_services_IClientRPC> com_mobicage_capi_services_IClientRPC_instance;
+@property(nonatomic, weak) id<MCT_com_mobicage_capi_system_IClientRPC> com_mobicage_capi_system_IClientRPC_instance;
+
+
+- (id<IJSONable>)processIncomingCall:(MCTRPCCall *)call;
+
+@end
