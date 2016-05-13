@@ -28,6 +28,7 @@
 #import "MCTRegistrationPage1VC.h"
 #import "MCTRegistrationPage2VC.h"
 #import "MCTRegistrationForContentBrandingVC.h"
+#import "MCTRegistrationForOauthVC.h"
 #import "MCTStartScreenVC.h"
 #import "MCTUINavigationController.h"
 #import "MCTUIUtils.h"
@@ -78,9 +79,10 @@
     } else if (![MCTRegistrationMgr isPushNotificationsShown]) {
         [vcs addObject:[MCTPushNotificationsVC viewController]];
 
+    } else if (IS_OAUTH_REGISTRATION) {
+        [vcs addObject:[MCTRegistrationForOauthVC viewController]];
     } else {
         MCTRegistrationPage1VC *vc1 = nil;
-
         if (MCT_FACEBOOK_APP_ID == nil || !MCT_FACEBOOK_REGISTRATION) {
             vc1 = [MCTRegistrationPage1VC viewController];
             [vcs addObject:vc1];
