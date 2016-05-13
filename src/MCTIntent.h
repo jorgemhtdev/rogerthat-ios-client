@@ -127,6 +127,8 @@ extern NSString * const kINTENT_RECIPIENTS_GROUP_ADDED;
 extern NSString * const kINTENT_RECIPIENTS_GROUP_MODIFIED;
 extern NSString * const kINTENT_RECIPIENTS_GROUP_REMOVED;
 
+extern NSString * const kINTENT_OAUTH_RESULT;
+
 extern NSString * const kINTENT_MDP_LOGIN;
 
 extern NSString * const kINTENT_CACHED_FILE_RETRIEVED;

@@ -21,8 +21,9 @@ import re
 import shutil
 import subprocess
 import sys
-import yaml
 from PIL import Image
+
+import yaml
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 APPS_REPO_DIR = os.path.join(CURRENT_DIR, "..", "..", "apps", 'res')
@@ -341,6 +342,8 @@ def generate_rogerthatconfig():
                                                  doc["APP_CONSTANTS"]['REGISTRATION_EMAIL_SIGNATURE'],
                                                  doc["APP_CONSTANTS"]['REGISTRATION_PIN_SIGNATURE'],
                                                  doc["APP_CONSTANTS"]['EMAIL_HASH_ENCRYPTION_KEY'].replace('%s', '%@'),
+                                                 int(doc['APP_CONSTANTS'].get('REGISTRATION_TYPE', 1)),
+                                                 doc['APP_CONSTANTS'].get('REGISTRATION_TYPE_OAUTH_DOMAIN', "")),
                                                  about_website,
                                                  about_website_url,
                                                  about_email,

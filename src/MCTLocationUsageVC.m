@@ -20,6 +20,7 @@
 #import "MCTPushNotificationsVC.h"
 #import "MCTRegistrationPage0VC.h"
 #import "MCTRegistrationPage1VC.h"
+#import "MCTRegistrationForOauthVC.h"
 #import "MCTComponentFramework.h"
 #import "MCTConfigProvider.h"
 #import "MCTUIUtils.h"
@@ -232,13 +233,18 @@
             [self.navigationController setViewControllers:@[[MCTPushNotificationsVC viewController]]
                                                  animated:YES];
         } else {
-            if (MCT_FACEBOOK_APP_ID == nil || !MCT_FACEBOOK_REGISTRATION) {
-                [MCTRegistrationMgr sendRegistrationStep:@"2b"];
-                [self.navigationController setViewControllers:@[[MCTRegistrationPage1VC viewController]]
+            if (IS_OAUTH_REGISTRATION) {
+                [self.navigationController setViewControllers:@[[MCTRegistrationForOauthVC viewController]]
                                                      animated:YES];
             } else {
-                [self.navigationController setViewControllers:@[[MCTRegistrationPage0VC viewController]]
-                                                     animated:YES];
+                if (MCT_FACEBOOK_APP_ID == nil || !MCT_FACEBOOK_REGISTRATION) {
+                    [MCTRegistrationMgr sendRegistrationStep:@"2b"];
+                    [self.navigationController setViewControllers:@[[MCTRegistrationPage1VC viewController]]
+                                                         animated:YES];
+                } else {
+                    [self.navigationController setViewControllers:@[[MCTRegistrationPage0VC viewController]]
+                                                         animated:YES];
+                }
             }
         }
     }
