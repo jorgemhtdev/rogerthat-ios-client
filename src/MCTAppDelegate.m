@@ -278,6 +278,7 @@
     [self.intentFramework addHighPriorityIntent:kINTENT_FB_POST];
     [self.intentFramework addHighPriorityIntent:kINTENT_FB_TICKER];
     [self.intentFramework addHighPriorityIntent:kINTENT_PUSH_NOTIFICATION_SETTINGS_UPDATED];
+    [self.intentFramework addHighPriorityIntent:kINTENT_OAUTH_RESULT];
     [self.intentFramework addHighPriorityIntent:kINTENT_MDP_LOGIN];
 
     self.dbManager = [[MCTDatabaseManager alloc] initFromSQLScripts];
@@ -696,6 +697,8 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
     NSString *urlStr = [url absoluteString];
     LOG(@"App opened with url: %@", urlStr);
 
+    // @"oauth-rogerthat://x-callback-url?code=QIRL7z3peeOSwigH8pfjIEj1ooZD&state=36b09b28-3f60-461f-97a7-3da3633a0005"
+
     if ([[urlStr lowercaseString] hasPrefix:MCT_PREFIX_ROGERTHAT_URL]) {
         MCTIntent *intent = [MCTIntent intentWithAction:kINTENT_APPLICATION_OPEN_URL];
         [intent setString:urlStr forKey:@"url"];
@@ -713,6 +716,25 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
         }];
         [self.intentFramework broadcastIntent:intent];
         return YES;
+    }
+
+    NSURL *redirectURL = [NSURL URLWithString:[NSString stringWithFormat:@"oauth-%@://x-callback-url", MCT_PRODUCT_ID]];
+    if (([[url host] isEqualToString:[redirectURL host]] && [[url path] isEqualToString:[redirectURL path]])) {
+        NSDictionary *queryDictionary = [NSDictionary gtm_dictionaryWithHttpArgumentsString:[url query]];
+        LOG(@"Oauth authorize result: %@", queryDictionary);
+
+        MCTIntent *intent = [MCTIntent intentWithAction:kINTENT_OAUTH_RESULT];
+        if ([queryDictionary objectForKey:@"code"]) {
+            [intent setBool:YES forKey:@"success"];
+            [intent setString:[queryDictionary objectForKey:@"code"] forKey:@"result"];
+        } else {
+            [intent setBool:NO forKey:@"success"];
+            [intent setString:[queryDictionary objectForKey:@"error_description"] forKey:@"result"];
+        }
+
+        [self.intentFramework broadcastIntent:intent];
+        return YES;
+
     }
 
     return NO;

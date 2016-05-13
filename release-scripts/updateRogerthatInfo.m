@@ -47,6 +47,16 @@ int main (int argc, const char * argv[]) {
             }
             val[@"CFBundleURLSchemes"][0] = [NSString stringWithFormat:@"mdp-%@", appId];
             NSLog(@"CFBundleURLSchemes MDP: %@ -> %@", scheme, val[@"CFBundleURLSchemes"][0]);
+        } else if (urlId && [urlId hasPrefix:@"com.mobicage.rogerthat."] && [urlId hasSuffix:@".oauth"]) {
+            if ([appId isEqualToString:@"rogerthat"]) {
+                [val setValue:@"com.mobicage.rogerthat.oauth" forKey:@"CFBundleURLName"];
+            } else {
+                [val setValue:[NSString stringWithFormat:@"com.mobicage.rogerthat.%@.oauth",
+                               [appId stringByReplacingOccurrencesOfString:@"-" withString:@"."]]
+                       forKey:@"CFBundleURLName"];
+            }
+            val[@"CFBundleURLSchemes"][0] = [NSString stringWithFormat:@"oauth-%@", appId];
+            NSLog(@"CFBundleURLSchemes OAUTH: %@ -> %@", scheme, val[@"CFBundleURLSchemes"][0]);
         } else if ([scheme hasPrefix:@"fb"]) {
             hasFacebookScheme = YES;
             if ([facebookAppId isEqualToString:@"None"]) {
@@ -79,6 +89,9 @@ int main (int argc, const char * argv[]) {
         NSString *scheme = configDict[@"LSApplicationQueriesSchemes"][i];
         if ([scheme hasPrefix:@"mdp-"]) {
             configDict[@"LSApplicationQueriesSchemes"][i] = [NSString stringWithFormat:@"mdp-%@", appId];
+        }
+        if ([scheme hasPrefix:@"oauth-"]) {
+            configDict[@"LSApplicationQueriesSchemes"][i] = [NSString stringWithFormat:@"oauth-%@", appId];
         }
     }
 

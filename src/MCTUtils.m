@@ -39,6 +39,8 @@
 #import "NSStringAdditions.h"
 #import "TTGlobalCore.h"
 
+#import <SafariServices/SafariServices.h>
+
 static MCTlong CLIENT_SERVER_EPOCH_DIFFERENCE_MILLIS;
 static MCTlong LAST_TIME_SOUND_PLAYED;
 
@@ -638,6 +640,33 @@ BOOL MCTCheckQueue(NSString *queueName)
     return success;
 }
 
+#pragma mark - oauth
+
++ (void)startOauthWithVC:(UIViewController *)vc
+            authorizeUrl:(NSString *)authorizeUrl
+                  scopes:(NSString *)scopes
+                   state:(NSString *)state
+                clientId:(NSString *)clientId
+{
+    T_UI();
+
+    NSDictionary *params = @{@"state": state,
+                             @"client_id": clientId,
+                             @"scope": scopes,
+                             @"redirect_uri": [NSString stringWithFormat:@"oauth-%@://x-callback-url", MCT_PRODUCT_ID],
+                             @"response_type": @"code"};
+
+    NSString *url = [authorizeUrl stringByAddingURLEncodedQueryDictionary:params];
+
+    IF_PRE_IOS9({
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    })
+
+    IF_IOS9_OR_GREATER({
+        SFSafariViewController *safari = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+        [vc presentViewController:safari animated:YES completion:nil];
+    })
+}
 
 @end
 
