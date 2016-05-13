@@ -128,6 +128,8 @@ NSString * const kINTENT_RECIPIENTS_GROUP_ADDED     = @"recipients group added";
 NSString * const kINTENT_RECIPIENTS_GROUP_MODIFIED  = @"recipients group modified";
 NSString * const kINTENT_RECIPIENTS_GROUP_REMOVED   = @"recipients group removed";
 
+NSString * const kINTENT_OAUTH_RESULT               = @"oauth result";
+
 NSString * const kINTENT_MDP_LOGIN                  = @"mdp login";
 
 NSString * const kINTENT_CACHED_FILE_RETRIEVED = @"cached file retrieved";

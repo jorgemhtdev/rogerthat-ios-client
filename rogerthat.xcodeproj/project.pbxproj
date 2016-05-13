@@ -689,6 +689,9 @@
 		E214340A1C73366600EEBB58 /* Icon-57@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E21434001C73366500EEBB58 /* Icon-57@2x.png */; };
 		E21434131C73578600EEBB58 /* Icon-83-5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E21434101C73578600EEBB58 /* Icon-83-5@2x.png */; };
 		E21434241C7B00FD00EEBB58 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E21434231C7B00FD00EEBB58 /* WebKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E21FE0BF1CE20FCC00380F7F /* MCTRegistrationForOauthVC.m in Sources */ = {isa = PBXBuildFile; fileRef = E21FE0BE1CE20FCC00380F7F /* MCTRegistrationForOauthVC.m */; };
+		E21FE0C11CE2118900380F7F /* registrationForOauth.xib in Resources */ = {isa = PBXBuildFile; fileRef = E21FE0C01CE2118900380F7F /* registrationForOauth.xib */; };
+		E21FE0CD1CE35E5300380F7F /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E21FE0CC1CE35E5300380F7F /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E22A637E1B27215F003E0AE7 /* add_priority_1.png in Resources */ = {isa = PBXBuildFile; fileRef = E22A63721B27215F003E0AE7 /* add_priority_1.png */; };
 		E22A637F1B27215F003E0AE7 /* add_priority_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E22A63731B27215F003E0AE7 /* add_priority_1@2x.png */; };
 		E22A63801B27215F003E0AE7 /* add_priority_1@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E22A63741B27215F003E0AE7 /* add_priority_1@3x.png */; };
@@ -2128,6 +2131,10 @@
 		E21434001C73366500EEBB58 /* Icon-57@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57@2x.png"; sourceTree = "<group>"; };
 		E21434101C73578600EEBB58 /* Icon-83-5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-83-5@2x.png"; sourceTree = "<group>"; };
 		E21434231C7B00FD00EEBB58 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		E21FE0BD1CE20FCC00380F7F /* MCTRegistrationForOauthVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTRegistrationForOauthVC.h; sourceTree = "<group>"; };
+		E21FE0BE1CE20FCC00380F7F /* MCTRegistrationForOauthVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTRegistrationForOauthVC.m; sourceTree = "<group>"; };
+		E21FE0C01CE2118900380F7F /* registrationForOauth.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = registrationForOauth.xib; sourceTree = "<group>"; };
+		E21FE0CC1CE35E5300380F7F /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		E22A63721B27215F003E0AE7 /* add_priority_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add_priority_1.png; sourceTree = "<group>"; };
 		E22A63731B27215F003E0AE7 /* add_priority_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_priority_1@2x.png"; sourceTree = "<group>"; };
 		E22A63741B27215F003E0AE7 /* add_priority_1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_priority_1@3x.png"; sourceTree = "<group>"; };
@@ -2859,6 +2866,7 @@
 				8E3106551CDA1F4E00BA5794 /* libidn.a in Frameworks */,
 				CC908ED1144470CF009E97A0 /* MediaPlayer.framework in Frameworks */,
 				E21434241C7B00FD00EEBB58 /* WebKit.framework in Frameworks */,
+				E21FE0CD1CE35E5300380F7F /* SafariServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2898,6 +2906,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E21FE0CC1CE35E5300380F7F /* SafariServices.framework */,
 				CC5C7B01178EE916008BF302 /* Accounts.framework */,
 				CCD1BDBC138E805C0030FF57 /* AddressBook.framework */,
 				CCC8B0641490B3FF0037D660 /* AddressBookUI.framework */,
@@ -4171,6 +4180,7 @@
 				CC9A185E140BBAC900259952 /* registration1.xib */,
 				CC9A1A29140D04FD00259952 /* registration2.xib */,
 				E2F06A6F1C69D31600114D8C /* registrationForContentBranding.xib */,
+				E21FE0C01CE2118900380F7F /* registrationForOauth.xib */,
 				CC14D90B1557D041002BF16A /* scanResult.xib */,
 				CCE81DD51806C842008A2800 /* screenBranding.xib */,
 				CCD9247E1552C8610060DC52 /* serviceDetails.xib */,
@@ -4202,6 +4212,8 @@
 				CC9A1A27140D034B00259952 /* MCTRegistrationPage2VC.m */,
 				E2F06A6A1C69D23E00114D8C /* MCTRegistrationForContentBrandingVC.h */,
 				E2F06A6B1C69D23E00114D8C /* MCTRegistrationForContentBrandingVC.m */,
+				E21FE0BD1CE20FCC00380F7F /* MCTRegistrationForOauthVC.h */,
+				E21FE0BE1CE20FCC00380F7F /* MCTRegistrationForOauthVC.m */,
 				CC1C7D201581E579005778FD /* MCTStartScreenVC.h */,
 				CC1C7D211581E57B005778FD /* MCTStartScreenVC.m */,
 				E2A3A19A1B862C5E00447F94 /* MCTPushNotificationsVC.h */,
@@ -5924,6 +5936,7 @@
 				CC35FC2413338DB30052A82A /* ic_tab_magicmessage_unselected.png in Resources */,
 				E21434041C73366600EEBB58 /* Icon-40.png in Resources */,
 				E21434011C73366600EEBB58 /* Icon-29.png in Resources */,
+				E21FE0C11CE2118900380F7F /* registrationForOauth.xib in Resources */,
 				CC22E0C419264803006FBB67 /* Localizable.strings in Resources */,
 				CCFB606F19E42B9B00CE2E04 /* about-email.png in Resources */,
 				E24E0DD41C0C474E0072EB5C /* broadcast-example-en-1.png in Resources */,
@@ -6433,6 +6446,7 @@
 				E2E801B91924A38100D0948C /* TTURLArguments.m in Sources */,
 				E2E8011C1924A35800D0948C /* TTRecursiveProgress.m in Sources */,
 				E2E8FFA81924A33B00D0948C /* NSArrayAdditions.m in Sources */,
+				E21FE0BF1CE20FCC00380F7F /* MCTRegistrationForOauthVC.m in Sources */,
 				8E220CF71C904F7300A9ADCF /* XMPPPubSub.m in Sources */,
 				CCAA3DB11382C53F00A97D42 /* MCTAckMessageResponseHandler.m in Sources */,
 				CCAA3F4A1383E40A00A97D42 /* MCTLocationPlugin.m in Sources */,

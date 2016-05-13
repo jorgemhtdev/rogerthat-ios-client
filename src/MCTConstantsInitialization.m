@@ -79,6 +79,7 @@ NSString *MCT_FACEBOOK_APP_ID;
 
 int MCT_APP_TYPE;
 int MCT_REGISTRATION_TYPE;
+NSString *MCT_REGISTRATION_TYPE_OAUTH_DOMAIN;
 
 NSString *MCT_HOME_SCREEN_STYLE_TABS = @"tabs";
 NSString *MCT_HOME_SCREEN_STYLE_2X3 = @"2x3";
@@ -176,6 +177,8 @@ void MCTInitializeConstants()
     MCT_FULL_WIDTH_HEADERS = [[configDict objectForKey:@"FULL_WIDTH_HEADERS"] boolValue];
     MCT_APP_TYPE = [[configDict objectForKey:@"APP_TYPE"] intValue];
     MCT_REGISTRATION_TYPE = [[configDict objectForKey:@"REGISTRATION_TYPE"] intValue];
+
+    MCT_REGISTRATION_TYPE_OAUTH_DOMAIN = [configDict objectForKey:@"REGISTRATION_TYPE_OAUTH_DOMAIN"];
 
     NSString *friendsCaption = configDict[@"FRIENDS_CAPTION"];
     if ([@"contacts" isEqualToString:friendsCaption]) {

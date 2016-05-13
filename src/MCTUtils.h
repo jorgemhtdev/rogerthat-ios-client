@@ -107,6 +107,14 @@
 
 + (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL;
 
+#pragma mark - oauth
+
++ (void)startOauthWithVC:(UIViewController *)vc
+            authorizeUrl:(NSString *)authorizeUrl
+                  scopes:(NSString *)scopes
+                   state:(NSString *)state
+                clientId:(NSString *)clientId;
+
 @end
 
 

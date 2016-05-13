@@ -32,6 +32,8 @@ int main (int argc, const char * argv[]) {
                                     @"string",          @"REGISTRATION_EMAIL_SIGNATURE",
                                     @"string",          @"REGISTRATION_PIN_SIGNATURE",
                                     @"string",          @"EMAIL_HASH_ENCRYPTION_KEY",
+                                    @"int",             @"REGISTRATION_TYPE",
+                                    @"string",          @"REGISTRATION_TYPE_OAUTH_DOMAIN",
                                     @"string",          @"ABOUT_WEBSITE",
                                     @"string",          @"ABOUT_WEBSITE_URL",
                                     @"string",          @"ABOUT_EMAIL",
