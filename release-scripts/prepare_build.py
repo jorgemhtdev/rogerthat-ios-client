@@ -343,7 +343,7 @@ def generate_rogerthatconfig():
                                                  doc["APP_CONSTANTS"]['REGISTRATION_PIN_SIGNATURE'],
                                                  doc["APP_CONSTANTS"]['EMAIL_HASH_ENCRYPTION_KEY'].replace('%s', '%@'),
                                                  int(doc['APP_CONSTANTS'].get('REGISTRATION_TYPE', 1)),
-                                                 doc['APP_CONSTANTS'].get('REGISTRATION_TYPE_OAUTH_DOMAIN', "")),
+                                                 doc['APP_CONSTANTS'].get('REGISTRATION_TYPE_OAUTH_DOMAIN', ""),
                                                  about_website,
                                                  about_website_url,
                                                  about_email,
