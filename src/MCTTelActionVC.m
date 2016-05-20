@@ -111,6 +111,8 @@
             }
         }
         CFRelease(allPeople);
+    }
+    if (myAddressBook) {
         CFRelease(myAddressBook);
     }
 

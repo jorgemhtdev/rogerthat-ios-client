@@ -335,8 +335,6 @@ static NSTimeInterval MCTNextBackgroundFetchNever = -1;
         request.platformVersion = [[UIDevice currentDevice] systemVersion];
         request.timestamp = [MCTUtils currentTimeMillis];
 
-        NSString *errorString = [NSString stringWithFormat:@"%@\n%@", request.descriptionX, request.errorMessage];
-
         [MCT_com_mobicage_api_system CS_API_logErrorWithResponseHandler:[MCTDefaultResponseHandler defaultResponseHandler]
                                                              andRequest:request];
     }];

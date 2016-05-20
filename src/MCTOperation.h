@@ -19,29 +19,38 @@
 void mctExceptionHandler(NSException *exception);
 void mctSigHandler(int sig, siginfo_t *info, void *context);
 
-@interface MCTOperation : NSOperation
+@interface MCTOperation : NSOperation {
+    NSString *name_;
+}
 
 @property (copy) NSString *name;
+
 @end
 
 
-@interface MCTInvocationOperation : NSInvocationOperation
+@interface MCTInvocationOperation : NSInvocationOperation {
+    NSString *name_;
+}
 
 @property (copy) NSString *name;
+
 + (MCTInvocationOperation *)operationWithTarget:(NSObject *)target
                                        selector:(SEL)sel
                                         objects:(id)firstObject, ... NS_REQUIRES_NIL_TERMINATION;
 + (MCTInvocationOperation *)operationWithTarget:(id)target selector:(SEL)sel object:(id)arg;
+
 @end
 
 
 @interface MCTOperationQueue : NSOperationQueue
 
-@property (copy) NSString *name;
 + (MCTOperationQueue *)queueWithName:(NSString *)name;
+
 @end
 
 
 @interface MCTFakeOperationQueue : MCTOperationQueue
+
 + (MCTFakeOperationQueue *)queueWithName:(NSString *)name;
+
 @end
