@@ -21,7 +21,7 @@
 
 @interface MCTStartServiceActionRH : MCTAbstractResponseHandler
 
-@property (nonatomic, copy) NSString *hash;
+@property (nonatomic, copy) NSString *emailHash;
 @property (nonatomic, strong) NSNumber *action;
 
 + (MCTStartServiceActionRH *)responseHandlerWithHash:(NSString *)emailHash andAction:(NSNumber *)action;
