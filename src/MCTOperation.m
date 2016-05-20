@@ -96,6 +96,7 @@ void mctSigHandler(int sig, siginfo_t *info, void *context)
 
 @implementation MCTOperation
 
+@synthesize name = name_;
 
 - (void)start
 {
@@ -110,6 +111,7 @@ void mctSigHandler(int sig, siginfo_t *info, void *context)
 
 @implementation MCTInvocationOperation
 
+@synthesize name = name_;
 
 + (MCTInvocationOperation *)operationWithTarget:(NSObject *)target selector:(SEL)sel objects:(id)firstObject, ...
 {
