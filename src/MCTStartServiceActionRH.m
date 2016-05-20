@@ -31,7 +31,7 @@
 + (MCTStartServiceActionRH *)responseHandlerWithHash:(NSString *)emailHash andAction:(NSNumber *)action
 {
     MCTStartServiceActionRH *rh = [[MCTStartServiceActionRH alloc] init];
-    rh.hash = emailHash;
+    rh.emailHash = emailHash;
     rh.action = action;
     return rh;
 }
@@ -53,7 +53,7 @@
 {
     T_BACKLOG();
     if (self = [super initWithCoder:coder]) {
-        self.hash = [coder decodeObjectForKey:PICKLE_HASH_KEY];
+        self.emailHash = [coder decodeObjectForKey:PICKLE_HASH_KEY];
         self.action = [coder decodeObjectForKey:PICKLE_ACTION_KEY];
     }
     return self;
@@ -63,7 +63,7 @@
 {
     T_BACKLOG();
     [super encodeWithCoder:coder];
-    [coder encodeObject:self.hash forKey:PICKLE_HASH_KEY];
+    [coder encodeObject:self.emailHash forKey:PICKLE_HASH_KEY];
     [coder encodeObject:self.action forKey:PICKLE_ACTION_KEY];
 }
 

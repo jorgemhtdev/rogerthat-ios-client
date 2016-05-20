@@ -486,7 +486,7 @@
 -(void)showOrderItemDetailForRow:(MCTAdvancedOrderCategoryItemRow *)row indexPath:(NSIndexPath *)indexPath
 {
     MCTAdvancedOrderItemCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    NSIndexPath *categoryIndexPath;
+    NSIndexPath *categoryIndexPath = nil;
     for (int i = 0; i < [self.tableViewData count]; i++) {
         id r = [self.tableViewData objectAtIndex:i];
         if ([r isKindOfClass:[MCTAdvancedOrderCategoryRow class]]) {
@@ -496,6 +496,9 @@
                 break;
             }
         }
+    }
+    if (!categoryIndexPath) {
+        return;
     }
 
     if([self.resultDictonary containsKey:row.categoryId]) {

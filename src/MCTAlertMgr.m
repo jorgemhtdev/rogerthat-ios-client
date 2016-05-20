@@ -51,7 +51,7 @@
 @property (nonatomic) MCTlong lastTimeAnalyzed;
 @property (nonatomic) MCTlong alarmStartTime;
 
-@property (nonatomic, weak) AVAudioPlayer *audioPlayer;
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic) UIBackgroundTaskIdentifier bgTask;
 
 @end
