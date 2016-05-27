@@ -25,7 +25,6 @@
 #import "MCTRegistrationPage2VC.h"
 #import "MCTUIUtils.h"
 #import "MCTUtils.h"
-
 #import "MCTJSONUtils.h"
 
 #define MCT_TAG_PINFAILED 1
@@ -39,7 +38,6 @@
 @property (nonatomic, strong) NSArray *codeFieldArray;
 @property (nonatomic, strong) MCTFinishRegistration *finishStep;
 
-- (void)displayPin;
 - (void)validatePin;
 
 - (void)requestFailed:(MCTFormDataRequest *)request;
@@ -68,7 +66,8 @@
     T_UI();
     [super viewDidLoad];
 
-    if (MCT_FULL_WIDTH_HEADERS) {
+    if (MCT_FULL_WIDTH_HEADERS)
+    {
         CGFloat w = [UIScreen mainScreen].applicationFrame.size.width;
         self.registrationLogo.frame = CGRectMake(0,
                                                  self.navigationController.navigationBar.height + [UIScreen mainScreen].applicationFrame.origin.y - 3,
@@ -77,89 +76,63 @@
         self.registrationLogo.autoresizingMask = UIViewAutoresizingNone;
     }
 
-    if (IS_ROGERTHAT_APP) {
-        [MCTUIUtils setBackgroundPlainToView:self.view];
-        [MCTUIUtils setBackgroundPlainToView:self.contentView];
-    } else {
-        self.view.backgroundColor = [UIColor MCTHomeScreenBackgroundColor];
-        self.contentView.backgroundColor = [UIColor MCTHomeScreenBackgroundColor];
-        self.lblDescription.textColor = [UIColor MCTHomeScreenTextColor];
-    }
+
+    self.view.backgroundColor = [UIColor MCTHomeScreenBackgroundColor];
+    self.lblDescription.textColor = [UIColor MCTHomeScreenTextColor];
+
 
     self.title = NSLocalizedString(@"Activation", nil);
     self.navigationItem.hidesBackButton = NO;
 
     [[UIMenuController sharedMenuController] setMenuVisible:NO];
-    self.codeFieldArray = [NSArray arrayWithObjects:self.code1, self.code2, self.code3, self.code4, nil];
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(textDidChange:)
                                                  name: UITextFieldTextDidChangeNotification
                                                object:self.txtHiddenPin];
-    self.txtHiddenPin.hidden = YES;
-    [self.txtHiddenPin becomeFirstResponder];
-
-    self.lblEnterPin.text = NSLocalizedString(@"Enter PIN", nil);
 
     NSString *timestamp = [MCTUtils timestampShortNotation:[self.preRegistrationInfo.registrationTime longLongValue] andShowMinutes:NO];
     NSString *message = [NSString stringWithFormat:NSLocalizedString(@"Your activation code has been mailed to %@ at %@\n\nDo not forget to check your Spam or Unwanted Email folders.", nil),
                          self.preRegistrationInfo.email, timestamp];
     self.lblDescription.text = message;
 
-    if (CGRectGetMaxY([UIScreen mainScreen].applicationFrame) < MCT_IPHONE_6_HEIGHT) {
-        self.registrationLogo.hidden = YES;
-        IF_PRE_IOS7({
-            self.contentView.top = 0;
-        });
-        IF_IOS7_OR_GREATER({
-            self.contentView.top = 64;
-        });
-    }
-
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
+                                               object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
                                                object:nil];
 }
 
 - (void)keyboardWillShow:(NSNotification *)aNotification
 {
-    // The 20px is for the status bar
     CGSize keyboardSize = [MCTUIUtils keyboardSizeWithNotification:aNotification];
-    CGFloat pinViewBottom = [[UIScreen mainScreen] applicationFrame].size.height - keyboardSize.height- self.contentView.top + 20;
 
     [UIView animateWithDuration:0.2
                      animations:^{
-                         self.pinBGView.bottom = pinViewBottom;
-                         self.pinView.bottom = pinViewBottom;
+                         self.view.top = -keyboardSize.height;
                      } completion:^(BOOL finished) {
                      }];
 
 }
+
+- (void)keyboardWillHide:(NSNotification *)aNotification
+{
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         self.view.top = 0;
+                     } completion:^(BOOL finished) {
+                     }];
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     T_UI();
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-#pragma mark -
-
-- (void)displayPin
-{
-    T_UI();
-    if (self.txtHiddenPin.text == nil)
-        self.txtHiddenPin.text = @"";
-
-    for (int i = 0; i < [self.txtHiddenPin.text length]; i++) {
-        UITextField *txtField = [self.codeFieldArray objectAtIndex:i];
-        txtField.text = [self.txtHiddenPin.text substringWithRange:NSMakeRange(i, 1)];
-    }
-
-    for (NSInteger i = [self.txtHiddenPin.text length]; i < 4; i++) {
-        UITextField *txtField = [self.codeFieldArray objectAtIndex:i];
-        txtField.text = @"";
-    }
 }
 
 - (void)validatePin
@@ -220,7 +193,6 @@
     self.currentAlertView.delegate = self;
     self.currentAlertView.tag = MCT_TAG_PIN_VERIFY_REQUEST_FAILED;
     self.txtHiddenPin.text = @"";
-    [self displayPin];
 
     [self.httpRequest clearDelegatesAndCancel];
     MCT_RELEASE(self.httpRequest);
@@ -266,7 +238,6 @@
         self.currentAlertView.delegate = self;
 
         self.txtHiddenPin.text = @"";
-        [self displayPin];
     }
     else if (result && [result isEqualToString:@"success"]) {
         NSDictionary *accountDict = [jsonDict objectForKey:@"account"];
@@ -276,7 +247,6 @@
         credentials.password = [accountDict stringForKey:@"password"];
         MCTRegistrationInfo *info = [MCTRegistrationInfo infoWithCredentials:credentials
                                                                     andEmail:self.preRegistrationInfo.email];
-
         self.finishStep = [[MCTFinishRegistration alloc] init];
         self.finishStep.delegate = self;
         self.finishStep.registrationInfo = info;
@@ -317,8 +287,6 @@
         if ([pin length] == 4) {
             [self validatePin];
         }
-
-        [self displayPin];
     }
 }
 
@@ -344,6 +312,12 @@
     }
 
     MCT_RELEASE(self.currentAlertView);
+}
+
+- (IBAction)onBackgroundTapped:(id)sender
+{
+    T_UI();
+    [self.txtHiddenPin resignFirstResponder];
 }
 
 #pragma mark -

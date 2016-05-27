@@ -54,7 +54,7 @@
 }
 
 
-- (void)onContinueClicked:(id)sender
+- (IBAction)onContinueClicked:(id)sender
 {
     CLAuthorizationStatus locationAuthorizationStatus = [CLLocationManager authorizationStatus];
 
@@ -81,16 +81,11 @@
 
     self.view.frame = [[UIScreen mainScreen] applicationFrame];
     self.hidesBottomBarWhenPushed = YES;
-    self.continueButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Continue", nil)
-                                                                style:UIBarButtonItemStyleBordered
-                                                               target:self
-                                                               action:@selector(onContinueClicked:)];
 
     self.title = NSLocalizedString(@"Location usage", nil);
     self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.rightBarButtonItem = self.continueButtonItem;
 
-    int textWidth = MCT_FULL_WIDTH_HEADERS ? self.view.width - 60 : self.imageView.right - self.imageView.left;
+    int textWidth = self.view.width - 2 * MARGIN;
 
     UIColor *textColor;
     if (IS_ROGERTHAT_APP) {
@@ -106,13 +101,14 @@
     UILabel *lblDescription = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, textWidth, 18)];
     lblDescription.font = [UIFont boldSystemFontOfSize:17];
     lblDescription.backgroundColor = [UIColor clearColor];
+    lblDescription.textAlignment = NSTextAlignmentCenter;
     lblDescription.textColor = textColor;
     lblDescription.numberOfLines = 0;
     lblDescription.text = [NSString stringWithFormat:NSLocalizedString(@"__location_usage_augment_experience", nil), MCT_PRODUCT_NAME];
     lblDescription.height =  [MCTUIUtils sizeForLabel:lblDescription].height;
 
     lblDescription.top = self.imageView.bottom + (MCT_FULL_WIDTH_HEADERS ? 16 : self.imageView.top);
-    lblDescription.left = MCT_FULL_WIDTH_HEADERS ? 30 : self.imageView.left;
+    lblDescription.left = MARGIN;
     [self.scrollView addSubview:lblDescription];
 
     UILabel *lblGreen = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, textWidth, 18)];
@@ -209,7 +205,7 @@
     bv5.textColor = textColor;
     bv5.numberOfLines = 0;
     bv5.text = [NSString stringWithFormat:@"\u2022 %1$@", NSLocalizedString(@"Track your location without your prior consent", nil)];
-    bv5.height =  [MCTUIUtils sizeForLabel:bv5].height + 10;
+    bv5.height =  [MCTUIUtils sizeForLabel:bv5].height;
 
     bv5.top = bv4.bottom;
     bv5.left = bv1.left;
@@ -217,6 +213,12 @@
 
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, bv5.bottom + 5);
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 
 - (void)gotoNextPage
 {

@@ -23,11 +23,12 @@
 
 @interface MCTPushNotificationsVC : MCTBaseRegistrationVC <UIScrollViewDelegate, IMCTIntentReceiver>
 
-@property (nonatomic, strong) UIBarButtonItem *continueButtonItem;
+@property (nonatomic, strong) IBOutlet UIButton *continueButtonItem;
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 
 
 + (MCTPushNotificationsVC *)viewController;
+- (IBAction)onContinueClicked:(id)sender;
 
 @end

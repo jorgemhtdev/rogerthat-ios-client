@@ -22,20 +22,12 @@
 
 @interface MCTRegistrationPage2VC : MCTBaseRegistrationVC <UITextFieldDelegate, UIAlertViewDelegate, MCTFinishRegistrationCallback>
 
-@property (nonatomic, strong) IBOutlet UIView *pinView;
-@property (nonatomic, strong) IBOutlet UIView *pinBGView;
 @property (nonatomic, strong) IBOutlet UITextField *txtHiddenPin;
-@property (nonatomic, strong) IBOutlet UITextField *code1;
-@property (nonatomic, strong) IBOutlet UITextField *code2;
-@property (nonatomic, strong) IBOutlet UITextField *code3;
-@property (nonatomic, strong) IBOutlet UITextField *code4;
 @property (nonatomic, strong) IBOutlet UILabel *lblDescription;
-@property (nonatomic, strong) IBOutlet UILabel *lblEnterPin;
 @property (nonatomic, strong) MCTPreRegistrationInfo *preRegistrationInfo;
 @property (nonatomic, strong) MCTFormDataRequest *httpRequest;
-@property (nonatomic, strong) IBOutlet UIView *contentView;
 @property (nonatomic, strong) IBOutlet UIImageView *registrationLogo;
 
 + (MCTRegistrationPage2VC *)viewController;
-
+- (IBAction)onBackgroundTapped:(id)sender;
 @end

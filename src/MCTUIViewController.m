@@ -21,6 +21,8 @@
 #import "MCTUIViewController.h"
 #import "MCTUIUtils.h"
 #import "MCTUtils.h"
+#import "UIImage+FontAwesome.h"
+#import "SWRevealViewController.h"
 
 @implementation MCTUIViewController
 
@@ -50,6 +52,32 @@
     IF_IOS7_OR_GREATER({
         self.automaticallyAdjustsScrollViewInsets = NO;
     });
+
+    if (MCT_HOME_SCREEN_STYLE == MCT_HOME_SCREEN_STYLE_NEWS) {
+        // TODO: add hamburger icon to self.navigationItem.leftBarButtonItem
+
+        SWRevealViewController *revealController = [self revealViewController];
+        [revealController panGestureRecognizer];
+        [revealController tapGestureRecognizer];
+
+//        UIBarButtonItem *revealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]style:UIBarButtonItemStyleBordered target:revealController action:@selector(revealToggle:)];
+//        self.navigationItem.leftBarButtonItem = revealButtonItem;
+//
+//        //Add an image to your project & set that image here.
+//        UIBarButtonItem *rightRevealButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reveal-icon.png"]style:UIBarButtonItemStyleBordered target:revealController action:@selector(rightRevealToggle:)];
+//        self.navigationItem.rightBarButtonItem = rightRevealButtonItem;
+
+        //
+
+        UIImage *barsImg = [UIImage imageWithIcon:@"fa-bars"
+                                  backgroundColor:[UIColor clearColor]
+                                        iconColor:[UIColor colorWithString:MCT_APP_PRIMARY_COLOR]
+                                          andSize:CGSizeMake(30, 30)];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:barsImg
+                                                                                 style:UIBarButtonItemStylePlain
+                                                                                target:nil
+                                                                                action:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

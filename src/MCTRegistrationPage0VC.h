@@ -20,23 +20,20 @@
 #import "MCTFacebookRegistration.h"
 
 
-@interface MCTRegistrationPage0VC : MCTBaseRegistrationVC <UIAlertViewDelegate, UIActionSheetDelegate, IMCTIntentReceiver>
+@interface MCTRegistrationPage0VC : MCTBaseRegistrationVC <UIAlertViewDelegate, UIActionSheetDelegate,  UITextFieldDelegate, IMCTIntentReceiver>
 
 + (MCTRegistrationPage0VC *)viewController;
 
-@property (nonatomic, strong) IBOutlet UILabel *fbLbl;
-@property (nonatomic, strong) IBOutlet UILabel *fbNoteLbl;
-@property (nonatomic, strong) IBOutlet UIControl *fbControl;
-@property (nonatomic, strong) IBOutlet UIImageView *fbLogo;
 @property (nonatomic, strong) IBOutlet UIButton *fbBtn;
-@property (nonatomic, strong) IBOutlet UILabel *mailLbl;
-@property (nonatomic, strong) IBOutlet UIControl *mailControl;
-@property (nonatomic, strong) IBOutlet UIImageView *mailLogo;
-@property (nonatomic, strong) IBOutlet UIButton *mailBtn;
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
+@property (nonatomic, strong) IBOutlet UITextField *emailTextField;
+@property (nonatomic, strong) IBOutlet UIButton *registerBtn;
 @property (nonatomic, strong) MCTFacebookRegistration *fbRegistration;
+@property (nonatomic, strong) MCTPreRegistrationInfo *preRegistrationInfo;
+@property (nonatomic, strong) MCTFormDataRequest *httpRequest;
 
 - (IBAction)onFacebookTapped:(id)sender;
 - (IBAction)onEmailTapped:(id)sender;
+- (IBAction)onBackgroundTapped:(id)sender;
 
 @end

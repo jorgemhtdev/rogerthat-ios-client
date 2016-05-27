@@ -106,11 +106,18 @@
 		8E220D3C1C904F8A00A9ADCF /* XMPPSCRAMSHA1Authentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E220D2E1C904F8A00A9ADCF /* XMPPSCRAMSHA1Authentication.m */; };
 		8E220D3D1C904F8A00A9ADCF /* XMPPXFacebookPlatformAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E220D311C904F8A00A9ADCF /* XMPPXFacebookPlatformAuthentication.m */; };
 		8E220D3E1C904F8A00A9ADCF /* XMPPXOAuth2Google.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E220D341C904F8A00A9ADCF /* XMPPXOAuth2Google.m */; };
+		8E2C889D1CEF3F5000277D47 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E2C889C1CEF3F5000277D47 /* SWRevealViewController.m */; };
 		8E3106551CDA1F4E00BA5794 /* libidn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E3106541CDA1F4E00BA5794 /* libidn.a */; };
+		8E5420411CE2162C005D37F3 /* MCTGradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5420401CE2162C005D37F3 /* MCTGradientButton.m */; };
+		8E57135F1CEDF5630095B233 /* MCTHamburgerMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E57135E1CEDF5630095B233 /* MCTHamburgerMenuViewController.m */; };
 		8E5F2F5A1C90592C0082D66D /* iPhoneXMPPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5F2F531C90592C0082D66D /* iPhoneXMPPAppDelegate.m */; };
 		8E5F2F5B1C90592C0082D66D /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5F2F551C90592C0082D66D /* RootViewController.m */; };
 		8E5F2F5C1C90592C0082D66D /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5F2F571C90592C0082D66D /* SettingsViewController.m */; };
 		8E5F2F5D1C90592C0082D66D /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E5F2F581C90592C0082D66D /* SettingsViewController.xib */; };
+		8E78A0A51CEC829B0027AF96 /* MCTTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E78A0A41CEC829B0027AF96 /* MCTTextField.m */; };
+		8E78A0A71CEC9EE90027AF96 /* hamburgerMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E78A0A61CEC9EE90027AF96 /* hamburgerMenu.xib */; };
+		8E7F53151CF3319300D17B60 /* news.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E7F53141CF3319300D17B60 /* news.xib */; };
+		8E7F53181CF331E000D17B60 /* MCTNewsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E7F53171CF331E000D17B60 /* MCTNewsVC.m */; };
 		C304337D12EEE1EA00E82A3A /* MCTPickler.m in Sources */ = {isa = PBXBuildFile; fileRef = C304337C12EEE1EA00E82A3A /* MCTPickler.m */; };
 		C3053E3112E79A58000AC5DB /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = C3053E3012E79A58000AC5DB /* NSData+Base64.m */; };
 		C3058CA115D417C000DE6088 /* MCTFindServiceResponseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C3058CA015D417BF00DE6088 /* MCTFindServiceResponseHandler.m */; };
@@ -1290,7 +1297,13 @@
 		8E220D341C904F8A00A9ADCF /* XMPPXOAuth2Google.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMPPXOAuth2Google.m; sourceTree = "<group>"; };
 		8E220D351C904F8A00A9ADCF /* XMPPCustomBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPCustomBinding.h; sourceTree = "<group>"; };
 		8E220D361C904F8A00A9ADCF /* XMPPSASLAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPSASLAuthentication.h; sourceTree = "<group>"; };
+		8E2C889B1CEF3F5000277D47 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SWRevealViewController.h; path = "../../../../Downloads/SWRevealViewController-master/SWRevealViewController/SWRevealViewController.h"; sourceTree = "<group>"; };
+		8E2C889C1CEF3F5000277D47 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SWRevealViewController.m; path = "../../../../Downloads/SWRevealViewController-master/SWRevealViewController/SWRevealViewController.m"; sourceTree = "<group>"; };
 		8E3106541CDA1F4E00BA5794 /* libidn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libidn.a; sourceTree = "<group>"; };
+		8E54203F1CE2162C005D37F3 /* MCTGradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTGradientButton.h; sourceTree = "<group>"; };
+		8E5420401CE2162C005D37F3 /* MCTGradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTGradientButton.m; sourceTree = "<group>"; };
+		8E57135D1CEDF5630095B233 /* MCTHamburgerMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTHamburgerMenuViewController.h; sourceTree = "<group>"; };
+		8E57135E1CEDF5630095B233 /* MCTHamburgerMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTHamburgerMenuViewController.m; sourceTree = "<group>"; };
 		8E5F2F521C90592C0082D66D /* iPhoneXMPPAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPhoneXMPPAppDelegate.h; sourceTree = "<group>"; };
 		8E5F2F531C90592C0082D66D /* iPhoneXMPPAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPhoneXMPPAppDelegate.m; sourceTree = "<group>"; };
 		8E5F2F541C90592C0082D66D /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -1299,6 +1312,12 @@
 		8E5F2F571C90592C0082D66D /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		8E5F2F581C90592C0082D66D /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
 		8E5F2F591C90592C0082D66D /* XMPPFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMPPFramework.h; sourceTree = "<group>"; };
+		8E78A0A31CEC829B0027AF96 /* MCTTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTTextField.h; sourceTree = "<group>"; };
+		8E78A0A41CEC829B0027AF96 /* MCTTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTTextField.m; sourceTree = "<group>"; };
+		8E78A0A61CEC9EE90027AF96 /* hamburgerMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = hamburgerMenu.xib; sourceTree = "<group>"; };
+		8E7F53141CF3319300D17B60 /* news.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = news.xib; sourceTree = "<group>"; };
+		8E7F53161CF331E000D17B60 /* MCTNewsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTNewsVC.h; sourceTree = "<group>"; };
+		8E7F53171CF331E000D17B60 /* MCTNewsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTNewsVC.m; sourceTree = "<group>"; };
 		C303DD1B12DCCCD600B2A3C1 /* rogerthat_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rogerthat_Prefix.pch; sourceTree = "<group>"; };
 		C304337B12EEE1EA00E82A3A /* MCTPickler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTPickler.h; sourceTree = "<group>"; };
 		C304337C12EEE1EA00E82A3A /* MCTPickler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTPickler.m; sourceTree = "<group>"; };
@@ -3546,6 +3565,8 @@
 				C3360F3D12E0504100BC510E /* plugins */,
 				C3360F3A12E04FB000BC510E /* rpc */,
 				C3360F2D12E04EF800BC510E /* util */,
+				8E2C889B1CEF3F5000277D47 /* SWRevealViewController.h */,
+				8E2C889C1CEF3F5000277D47 /* SWRevealViewController.m */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -4135,6 +4156,7 @@
 			isa = PBXGroup;
 			children = (
 				C39542CD12DCCEA200064592 /* MainWindow.xib */,
+				8E78A0A61CEC9EE90027AF96 /* hamburgerMenu.xib */,
 				CCA005CD1333A4A300668430 /* Menu.xib */,
 				CC17CA741446D81600282292 /* about.xib */,
 				CCA4025D1349F74500FA2E22 /* activity.xib */,
@@ -4193,6 +4215,7 @@
 				CC1C7CAE158101DA005778FD /* startScreen.xib */,
 				CCD1BE91138E95FF0030FF57 /* telAction.xib */,
 				CC96C13F1804238D00D39C81 /* tos.xib */,
+				8E7F53141CF3319300D17B60 /* news.xib */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -4532,6 +4555,8 @@
 			children = (
 				CC88167713B1D65E00020E85 /* scan */,
 				C3C5984E1373D27200322C97 /* registration */,
+				8E54203F1CE2162C005D37F3 /* MCTGradientButton.h */,
+				8E5420401CE2162C005D37F3 /* MCTGradientButton.m */,
 				E2A5636B19DBFBB200D09A9B /* MCTAbstractHomeScreenVC.h */,
 				E2A5636C19DBFBB200D09A9B /* MCTAbstractHomeScreenVC.m */,
 				CC7839EB1405225500A73228 /* MCTCheckmarkView.h */,
@@ -4558,6 +4583,12 @@
 				C342B3AB162FEB020052C523 /* MCTUITableViewController.m */,
 				C3C2C893162ED39700CBE6EB /* MCTUIViewController.h */,
 				C3C2C894162ED39700CBE6EB /* MCTUIViewController.m */,
+				8E78A0A31CEC829B0027AF96 /* MCTTextField.h */,
+				8E78A0A41CEC829B0027AF96 /* MCTTextField.m */,
+				8E57135D1CEDF5630095B233 /* MCTHamburgerMenuViewController.h */,
+				8E57135E1CEDF5630095B233 /* MCTHamburgerMenuViewController.m */,
+				8E7F53161CF331E000D17B60 /* MCTNewsVC.h */,
+				8E7F53171CF331E000D17B60 /* MCTNewsVC.m */,
 			);
 			name = ui;
 			sourceTree = "<group>";
@@ -5953,6 +5984,7 @@
 				CC550B9D133B69EB0008D344 /* friendInviteLocationSharing.xib in Resources */,
 				E2F06A831C69E4D500114D8C /* cb_footer.png in Resources */,
 				CCA4025E1349F74500FA2E22 /* activity.xib in Resources */,
+				8E7F53151CF3319300D17B60 /* news.xib in Resources */,
 				CC928BB71AD682B40010D2D2 /* menu_2x2@2x.png in Resources */,
 				CCE81DD61806C842008A2800 /* screenBranding.xib in Resources */,
 				CCD43558135F113F004D8CD8 /* newMessageRecipients.xib in Resources */,
@@ -6097,6 +6129,7 @@
 				E2DB551D1A150C9300CAD25C /* homescreen_header@2x.png in Resources */,
 				CC68AC051464385800146EFA /* gray_btn@2x.png in Resources */,
 				CC6A641C1BCFD38700138C73 /* update_69_to_70.sql in Resources */,
+				8E78A0A71CEC9EE90027AF96 /* hamburgerMenu.xib in Resources */,
 				E2A5635E19DBE11800D09A9B /* homescreen_3x3.xib in Resources */,
 				CCEFA4E51B851DC2005D0C21 /* InfoPlist.strings in Resources */,
 				CC3885911A1635680033C1B5 /* homescreen_watermark@3x.png in Resources */,
@@ -6532,8 +6565,10 @@
 				CCB9E95B1431D8CE00B48732 /* MCTSingleCall.m in Sources */,
 				E2E802551924A39500D0948C /* TTRoundedRectangleShape.m in Sources */,
 				CC72E24C1C0880420073318D /* MCTLogForwarding.m in Sources */,
+				8E7F53181CF331E000D17B60 /* MCTNewsVC.m in Sources */,
 				E2E801561924A35800D0948C /* TTTableViewDelegate.m in Sources */,
 				8E220CC61C904F7300A9ADCF /* XMPPIQ.m in Sources */,
+				8E2C889D1CEF3F5000277D47 /* SWRevealViewController.m in Sources */,
 				E2E801721924A35800D0948C /* UIViewAdditions.m in Sources */,
 				8E220CD41C904F7300A9ADCF /* XMPPResourceMemoryStorageObject.m in Sources */,
 				E2E802761924A39500D0948C /* TTStyleSheet.m in Sources */,
@@ -6625,6 +6660,7 @@
 				E2E8016C1924A35800D0948C /* UINavigationControllerAdditions.m in Sources */,
 				CCDBCD1F17FD685900520DAE /* MBProgressHUD.m in Sources */,
 				8E220CEC1C904F7300A9ADCF /* XMPPvCardCoreDataStorageObject.m in Sources */,
+				8E5420411CE2162C005D37F3 /* MCTGradientButton.m in Sources */,
 				E2630FA41C104F4D0014DB12 /* MCTAdvancedOrderItemCell.m in Sources */,
 				E2E8026F1924A39500D0948C /* TTStyledNode.m in Sources */,
 				CCF978101BE917250025DC87 /* UIFont+FontAwesome.m in Sources */,
@@ -6744,10 +6780,12 @@
 				8E220D3B1C904F8A00A9ADCF /* XMPPPlainAuthentication.m in Sources */,
 				8E220D001C904F7300A9ADCF /* XMPPAutoPing.m in Sources */,
 				CC1C7D221581E57C005778FD /* MCTStartScreenVC.m in Sources */,
+				8E57135F1CEDF5630095B233 /* MCTHamburgerMenuViewController.m in Sources */,
 				E2E8024F1924A39500D0948C /* TTLinearGradientFillStyle.m in Sources */,
 				E2E8013C1924A35800D0948C /* TTTableLink.m in Sources */,
 				E2EA5006192CDF0C005DE8AB /* MCTJSEmbedding.m in Sources */,
 				E2F06A6D1C69D23E00114D8C /* MCTRegistrationForContentBrandingVC.m in Sources */,
+				8E78A0A51CEC829B0027AF96 /* MCTTextField.m in Sources */,
 				CC277F941581FDAF00AD48CF /* MCTTermsOfServiceVC.m in Sources */,
 				8E220CE61C904F7300A9ADCF /* XMPPMessage+XEP0045.m in Sources */,
 				CC277FA11582333800AD48CF /* MCTRegistrationMgr.m in Sources */,

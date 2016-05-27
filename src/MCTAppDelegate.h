@@ -27,11 +27,13 @@
 #import "MCTOperation.h"
 #import "MCTPlugin.h"
 #import "MCTRegistrationMgr.h"
+#import "SWRevealViewController.h"
 
 #import <FacebookSDK/FacebookSDK.h>
 
+@class SWRevealViewController;
 
-@interface MCTAppDelegate : NSObject <UIApplicationDelegate, IMCTIntentReceiver>
+@interface MCTAppDelegate : NSObject <UIApplicationDelegate, IMCTIntentReceiver, SWRevealViewControllerDelegate>
 
 @property MCTlong lastCleanupEpoch;
 @property BOOL registerRemoteNotificationsFailed;
@@ -47,6 +49,7 @@
 @property(nonatomic, strong) MCTIntentFramework *intentFramework;
 @property(nonatomic, strong) MCTBrandingMgr *brandingMgr;
 @property(nonatomic, strong) MCTRegistrationMgr *registrationMgr;
+@property(nonatomic, strong) SWRevealViewController *viewController;
 @property(nonatomic, strong) NSDictionary *plugins;
 @property(nonatomic, strong) NSObject *pluginLock;
 @property(nonatomic, copy) NSString *forceMyEmail;

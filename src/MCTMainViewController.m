@@ -23,6 +23,7 @@
 #import "MCTContentBrandingMenuVC.h"
 #import "MCTRegistrationMgr.h"
 #import "MCTLocationUsageVC.h"
+#import "MCTNewsVC.h"
 #import "MCTPushNotificationsVC.h"
 #import "MCTRegistrationPage0VC.h"
 #import "MCTRegistrationPage1VC.h"
@@ -32,6 +33,9 @@
 #import "MCTStartScreenVC.h"
 #import "MCTUINavigationController.h"
 #import "MCTUIUtils.h"
+#import "MCTNewsVC.h"
+#import "MCTHamburgerMenuViewController.h"
+
 
 
 @interface MCTMainViewController()
@@ -107,6 +111,8 @@
     UINavigationController *nav = [[MCTUINavigationController alloc] init];
     nav.viewControllers = vcs;
     nav.navigationBar.tintColor = [UIColor MCTNavigationBarColor];
+    nav.navigationBar.translucent = NO;
+    nav.navigationBar.hidden = YES;
     [self switchToVC:nav];
     if (showPopup) {
         // TODO: own this alertview
@@ -121,6 +127,22 @@
     if (IS_CONTENT_BRANDING_APP) {
         MCTContentBrandingMenuVC *vc = [MCTContentBrandingMenuVC viewController];
         [self switchToVC:vc];
+    } else if (MCT_HOME_SCREEN_STYLE == MCT_HOME_SCREEN_STYLE_NEWS) {
+        MCTNewsVC *vc = [MCTNewsVC viewController];
+        MCTNewsVC *frontViewController = [[MCTNewsVC alloc] init];
+        MCTHamburgerMenuViewController *rearViewController = [[MCTHamburgerMenuViewController alloc] init];
+        MCTHamburgerMenuViewController *rightViewController = [[MCTHamburgerMenuViewController alloc] init];
+
+
+        UINavigationController *frontNavigationController = [[UINavigationController alloc] initWithRootViewController:frontViewController];
+        UINavigationController *rearNavigationController = [[UINavigationController alloc] initWithRootViewController:rearViewController];
+
+        SWRevealViewController *revealController = [[SWRevealViewController alloc] initWithRearViewController:rearNavigationController frontViewController:frontNavigationController];
+
+        revealController.delegate = self;
+        revealController.rightViewController = rightViewController;
+        [self switchToVC:revealController];
+
     } else if (MCT_HOME_SCREEN_STYLE == MCT_HOME_SCREEN_STYLE_TABS) {
         MCTMenuVC *vc = [[MCTMenuVC alloc] init];
         vc.msgLaunchOption = msgLaunchOption;

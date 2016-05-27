@@ -23,11 +23,13 @@
 
 @interface MCTLocationUsageVC : MCTBaseRegistrationVC <UIScrollViewDelegate, CLLocationManagerDelegate>
 
-@property (nonatomic, strong) UIBarButtonItem *continueButtonItem;
+@property (nonatomic, strong) IBOutlet UIButton *continueButton;
 @property (nonatomic, strong) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 
 
 + (MCTLocationUsageVC *)viewController;
+
+- (IBAction)onContinueClicked:(id)sender;
 
 @end

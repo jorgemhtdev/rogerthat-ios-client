@@ -93,6 +93,16 @@
     return [UIColor colorWithString:MCT_APP_HOMESCREEN_TEXT_COLOR];
 }
 
++ (UIColor *)MCTAppPrimaryColor
+{
+    return [UIColor colorWithString:MCT_APP_PRIMARY_COLOR];
+}
+
++ (UIColor *)MCTAppSecondaryColor
+{
+    return [UIColor colorWithString:MCT_APP_SECONDARY_COLOR];
+}
+
 + (UIColor *)MCPriorityHighBackgroundColor
 {
     return [UIColor colorWithString:@"#77CEDE"];
@@ -1144,6 +1154,40 @@
         v = v.superview;
     }
     return v;
+}
+
+
++ (CAGradientLayer *)addGradientToView:(UIView *)view withColors:(NSArray *)colors andRoundedCorners:(BOOL)withRoundedCorners
+{
+    T_UI();
+    CAGradientLayer *gradient = [[CAGradientLayer alloc] init];
+    gradient.frame = view.bounds;
+    gradient.colors = colors;
+    gradient.startPoint = CGPointMake(0.0, 0.5);
+    gradient.endPoint = CGPointMake(1.0, 0.5);
+    gradient.cornerRadius = view.layer.cornerRadius;
+    if (withRoundedCorners)
+    {
+        view.layer.cornerRadius = 5;
+        view.layer.masksToBounds = YES;
+    }
+
+    [view.layer insertSublayer:gradient atIndex:0];
+    return gradient;
+}
+
++ (CAGradientLayer *)addGradientToView:(UIView *)view
+{
+    return [MCTUIUtils addGradientToView:view
+                              withColors:@[(id)[UIColor MCTAppPrimaryColor].CGColor,
+                                           (id)[UIColor MCTAppSecondaryColor].CGColor]
+                       andRoundedCorners: YES ];
+}
+
++ (void)addBackgroundColorToView:(UIView *)view
+{
+    view.backgroundColor = [UIColor MCTHomeScreenBackgroundColor];
+
 }
 
 

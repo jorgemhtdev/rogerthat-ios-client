@@ -17,8 +17,9 @@
  */
 
 #import "MCTUIViewController.h"
+#import "SWRevealViewController.h"
 
-@interface MCTMainViewController : MCTUIViewController
+@interface MCTMainViewController : MCTUIViewController <SWRevealViewControllerDelegate>
 
 - (void)showRegistrationVCWithYouHaveBeenUnregisteredPopup:(BOOL)showPopup;
 - (void)showMenuWithMsgLaunchOption:(NSString *)msgLaunchOption andAckLaunchOption:(NSString *)ackLaunchOption;

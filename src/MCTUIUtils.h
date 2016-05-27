@@ -94,11 +94,12 @@
 + (void)addShadowToView:(UIView *)view withOffset:(CGSize)offset;
 + (void)addShadowToView:(UIView *)view withColor:(UIColor *)color andOffset:(CGSize)offset;
 
-+ (void)addGradientToView:(UIView *)view withColors:(NSArray *)colors;
++ (CAGradientLayer *)addGradientToView:(UIView *)view;
++ (CAGradientLayer *)addGradientToView:(UIView *)view withColors:(NSArray *)colors andRoundedCorners:(BOOL)withRoundedCorners;
 + (void)removeGradientFromView:(UIView *)view;
 + (void)setBackgroundPlainToView:(UIView *)view;
 + (void)setBackgroundStripesToView:(UIView *)view;
-
++ (void)addBackgroundColorToView:(UIView *)view;
 
 + (CGSize)keyboardSizeWithNotification:(NSNotification *)notification;
 + (CGSize)sizeForLabel:(UILabel *)label withWidth:(CGFloat)width;

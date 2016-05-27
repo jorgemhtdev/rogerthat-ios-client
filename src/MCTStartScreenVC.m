@@ -46,9 +46,8 @@
     T_UI();
     [super viewDidLoad];
 
-    self.title = [NSString stringWithFormat:NSLocalizedString(@"__registration_welcome", nil), MCT_PRODUCT_NAME];
-
-    if (MCT_FULL_WIDTH_HEADERS) {
+    if (MCT_FULL_WIDTH_HEADERS)
+    {
         CGRect appFrame = [UIScreen mainScreen].applicationFrame;
         self.imageView.frame = CGRectMake(0,
                                           self.navigationController.navigationBar.height + appFrame.origin.y - 3,
@@ -57,15 +56,10 @@
         self.imageView.autoresizingMask = UIViewAutoresizingNone;
     }
 
-    if (IS_ROGERTHAT_APP) {
-        [MCTUIUtils setBackgroundPlainToView:self.view];
-    } else {
-        self.view.backgroundColor = [UIColor MCTHomeScreenBackgroundColor];
-        self.welcomeLbl.textColor = [UIColor MCTHomeScreenTextColor];
-
-        [self changeNavigationControllerAppearanceWithColorScheme:MCTColorSchemeLight
+    self.view.backgroundColor = [UIColor MCTHomeScreenBackgroundColor];
+    self.welcomeLbl.textColor = [UIColor MCTHomeScreenTextColor];
+    [self changeNavigationControllerAppearanceWithColorScheme:MCTColorSchemeLight
                                                andBackGroundColor:[UIColor MCTHomeScreenBackgroundColor]];
-    }
 
     if (IS_ENTERPRISE_APP) {
         self.welcomeLbl.text = [NSString stringWithFormat:NSLocalizedString(@"__welcome_message_enterprise", nil), MCT_PRODUCT_NAME];
@@ -84,6 +78,14 @@
                                                                              action:nil];
 
     [MCTRegistrationMgr sendInstallationId];
+
+    [[self navigationController] setNavigationBarHidden:NO animated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [MCTUIUtils addGradientToView:self.agreeBtn];
 }
 
 #pragma mark -
@@ -97,13 +99,13 @@
 - (IBAction)onAgreeTapped:(id)sender
 {
     T_UI();
+    
     [[MCTComponentFramework workQueue] addOperationWithBlock:^{
         T_BIZZ();
         [[MCTComponentFramework configProvider] setString:@"YES" forKey:MCT_CONFIGKEY_TOS_ACCEPTED];
     }];
 
     [MCTRegistrationMgr sendRegistrationStep:@"1"];
-
     [self.navigationController setViewControllers:[NSArray arrayWithObject:[MCTLocationUsageVC viewController]]
                                          animated:YES];
 }

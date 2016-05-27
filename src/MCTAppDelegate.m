@@ -30,6 +30,9 @@
 #import "MCTOperation.h"
 #import "MCTSecurity.h"
 #import "MCTSettingsVC.h"
+#import "SWRevealViewController.h"
+#import "MCTNewsVC.h"
+#import "MCTHamburgerMenuViewController.h"
 
 #import "MCTActivityPlugin.h"
 #import "MCTFriendsPlugin.h"
@@ -62,6 +65,9 @@
 
 
 @implementation MCTAppDelegate
+
+@synthesize window = _window;
+@synthesize viewController = _viewController;
 
 
 - (void)settingsChange:(NSNotification *)notification
@@ -314,8 +320,8 @@
     self.window.rootViewController = [[MCTMainViewController alloc] initWithNibName:nil bundle:nil];
     [self.window makeKeyAndVisible];
     IF_IOS7_OR_GREATER({
-        if (MCT_APP_TINT_COLOR) {
-            self.window.tintColor = MCT_APP_TINT_COLOR;
+        if (MCT_APP_PRIMARY_COLOR) {
+            self.window.tintColor = [UIColor colorWithString:MCT_APP_PRIMARY_COLOR];
         }
     });
 
@@ -323,6 +329,7 @@
         if (isRegistered)
             [[self mainViewController] showMenuWithMsgLaunchOption:self.msgLaunchOption
                                                 andAckLaunchOption:self.ackLaunchOption];
+        
         else
             [[self mainViewController] showRegistrationVCWithYouHaveBeenUnregisteredPopup:NO];
     });
@@ -331,6 +338,7 @@
                                              selector:@selector(settingsChange:)
                                                  name:NSUserDefaultsDidChangeNotification
                                                object:[UIApplication sharedApplication]];
+
     return YES;
 }
 

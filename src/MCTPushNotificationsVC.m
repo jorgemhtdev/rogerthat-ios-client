@@ -120,16 +120,8 @@
 
     self.view.frame = [[UIScreen mainScreen] applicationFrame];
     self.hidesBottomBarWhenPushed = YES;
-    self.continueButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Continue", nil)
-                                                                style:UIBarButtonItemStyleBordered
-                                                               target:self
-                                                               action:@selector(onContinueClicked:)];
-
     self.title = NSLocalizedString(@"Notifications", nil);
-    self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.rightBarButtonItem = self.continueButtonItem;
-
-    int textWidth = MCT_FULL_WIDTH_HEADERS ? self.view.width - 60 : self.imageView.right - self.imageView.left;
+    int textWidth = self.view.width - 2 * MARGIN;
 
     UIColor *textColor;
     if (IS_ROGERTHAT_APP) {
@@ -144,6 +136,7 @@
 
     UILabel *lbl1 = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, textWidth, 18)];
     lbl1.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    lbl1.textAlignment = NSTextAlignmentCenter;
     lbl1.backgroundColor = [UIColor clearColor];
     lbl1.textColor = textColor;
     lbl1.numberOfLines = 0;
@@ -153,7 +146,7 @@
     lbl1.height =  [MCTUIUtils sizeForLabel:lbl1].height;
 
     lbl1.top = self.imageView.bottom + (MCT_FULL_WIDTH_HEADERS ? 16 : self.imageView.top);
-    lbl1.left = MCT_FULL_WIDTH_HEADERS ? 30 : self.imageView.left;
+    lbl1.left = MARGIN;
     [self.scrollView addSubview:lbl1];
 
     MCTLocaleInfo *locale = [MCTLocaleInfo info];
@@ -183,7 +176,7 @@
 
     animatedImageView.contentMode = UIViewContentModeScaleAspectFit;
     animatedImageView.top = lbl1.bottom + 10;
-    animatedImageView.left = lbl1.left;
+    animatedImageView.centerX = self.view.centerX;
     [self.scrollView addSubview:animatedImageView];
 
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, animatedImageView.bottom + 20);
@@ -195,6 +188,12 @@
                                                    forIntentActions:actions
                                                             onQueue:[MCTComponentFramework mainQueue]];
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 
 - (void)viewDidDisappear:(BOOL)animated
 {
